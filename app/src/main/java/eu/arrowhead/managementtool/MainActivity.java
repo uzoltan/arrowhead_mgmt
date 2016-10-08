@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        String url ="http://MODIFY_IP:8450/api/common/services";
+        String url ="http://192.168.1.64:8450/api/common/services";
 
         if (Utility.isConnected(this)) {
             JsonArrayRequest jsObjRequest = new JsonArrayRequest
