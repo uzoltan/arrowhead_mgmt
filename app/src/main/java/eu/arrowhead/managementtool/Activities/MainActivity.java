@@ -1,26 +1,13 @@
-package eu.arrowhead.managementtool;
+package eu.arrowhead.managementtool.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-
-import org.json.JSONArray;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import eu.arrowhead.managementtool.Utility.Networking;
-import eu.arrowhead.managementtool.Utility.Utility;
-import eu.arrowhead.managementtool.model.ArrowheadCloud;
-import eu.arrowhead.managementtool.model.ArrowheadService;
-import eu.arrowhead.managementtool.model.ServiceMetadata;
-import eu.arrowhead.managementtool.model.messages.InterCloudAuthEntry;
+import eu.arrowhead.managementtool.R;
 
 //TESTING GSON and VOLLEY library shit
 public class MainActivity extends AppCompatActivity {
@@ -32,8 +19,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTextView = (TextView) findViewById(R.id.textview);
+        Button servicesLauncher = (Button) findViewById(R.id.services_launcher);
+        servicesLauncher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ArrowheadServices.class);
+                startActivity(intent);
+            }
+        });
 
-        ArrowheadCloud cloud = new ArrowheadCloud("1", "2", "3", "4", "5", "6");
+        /*ArrowheadCloud cloud = new ArrowheadCloud("1", "2", "3", "4", "5", "6");
         ArrayList<String> interfaces = new ArrayList<String>();
         interfaces.add("json");
         interfaces.add("json");
@@ -57,18 +52,18 @@ public class MainActivity extends AppCompatActivity {
 
         InterCloudAuthEntry entry2 = Utility.fromJsonObject(json, InterCloudAuthEntry.class);
         String json2 = Utility.toJson(entry2);
-        Log.i("json test", json2);
+        Log.i("json test", json2);*/
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        String url ="http://192.168.1.64:8450/api/common/services";
+        /*String url ="http://arrowhead.tmit.bme.hu:8084/orchestrator/orchestration";
 
         if (Utility.isConnected(this)) {
             JsonArrayRequest jsObjRequest = new JsonArrayRequest
-                    (Request.Method.GET, url, null,
+                    (Request.Method.POST, url, null,
                             new Response.Listener<JSONArray>() {
 
                                 @Override
@@ -87,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     mTextView.setText(error.getMessage());
-                                    Log.i("network_test", "it did not work :(");
+                                    Log.i("network_test", error.toString());
                                 }}
                     );
 
@@ -95,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             mTextView.setText("not connected");
             Log.i("network_test", "not connected");
-        }
+        }*/
 
     }
 }
