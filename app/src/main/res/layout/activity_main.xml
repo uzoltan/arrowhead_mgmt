@@ -15,9 +15,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
+
     <Button
         android:id="@+id/services_launcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="launch activity"/>
+        android:text="launch activity" />
+
+    <ViewSwitcher xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/my_switcher"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/services_launcher"
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out">
+
+        <TextView
+            android:id="@+id/clickable_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="TextViewClicked"
+            android:text="test"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/hidden_edit_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="test"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:textSize="25sp"/>
+    </ViewSwitcher>
 </RelativeLayout>

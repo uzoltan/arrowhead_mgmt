@@ -13,8 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.arrowhead.managementtool.Adapters.ArrowheadServices_Adapter;
-import eu.arrowhead.managementtool.CustomViews.RecyclerViewEmptySupport;
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.Utility.Networking;
 import eu.arrowhead.managementtool.Utility.Utility;
@@ -38,16 +37,14 @@ public class ArrowheadServices extends AppCompatActivity implements
         SwipeRefreshLayout.OnRefreshListener{
 
     private DrawerLayout drawer;
-    private RecyclerViewEmptySupport mRecyclerView;
-    private View emptyView;
+    private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout srl;
 
     private List<ArrowheadService> serviceList = new ArrayList<>();
 
-    //TODO custom recyclerview with empty view not working (as intended) for some reason
-    //TODO replace hardwired url
+    //TODO replace hardwired url with proper solution
     private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/services";
 
     @Override
@@ -67,11 +64,13 @@ public class ArrowheadServices extends AppCompatActivity implements
         navigationView.setNavigationItemSelectedListener(this);
 
         //recyclerview setup
-        mRecyclerView = (RecyclerViewEmptySupport) findViewById(R.id.service_list);
+        mRecyclerView = (RecyclerView) findViewById(R.id.service_list);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        emptyView = findViewById(R.id.empty_recview);
+        /*DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
+                DividerItemDecoration.VERTICAL);
+        mRecyclerView.addItemDecoration(dividerItemDecoration);*/
         srl = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_service_list);
         srl.setOnRefreshListener(this);
 
@@ -79,37 +78,43 @@ public class ArrowheadServices extends AppCompatActivity implements
     }
 
     public void sendRequest(){
+        final ViewSwitcher switcher = (ViewSwitcher) findViewById(R.id.service_list_switcher);
         if (Utility.isConnected(this)) {
-            JsonArrayRequest jsArrayRequest = new JsonArrayRequest
-                    (Request.Method.GET, URL, null,
-                            new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
+                    new Response.Listener<JSONArray>() {
 
-                                @Override
-                                public void onResponse(JSONArray response){
-                                    serviceList = Utility.fromJsonArray(response.toString(), ArrowheadService.class);
-                                    mAdapter = new ArrowheadServices_Adapter(serviceList);
-                                    mRecyclerView.setAdapter(mAdapter);
-                                }},
-                            new Response.ErrorListener() {
+                        @Override
+                        public void onResponse(JSONArray response){
+                            serviceList = Utility.fromJsonArray(response.toString(), ArrowheadService.class);
+                            mAdapter = new ArrowheadServices_Adapter(serviceList);
+                            mRecyclerView.setAdapter(mAdapter);
+                            if(serviceList.size() > 0 && switcher.getDisplayedChild() == 1){
+                                //if the empty view is displayed at the moment, switch to the recyclerview
+                                switcher.showPrevious();
+                            }
+                        }},
+                    new Response.ErrorListener() {
 
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Snackbar.make(drawer, error.getMessage(), Snackbar.LENGTH_LONG).show();
-                                }}
-                    );
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            if(switcher.getDisplayedChild() == 0){
+                                //if the recyclerview is displayed at the moment, switch to the empty view
+                                switcher.showNext();
+                            }
+                            Snackbar.make(drawer, error.getMessage(), Snackbar.LENGTH_LONG).show();
+                        }}
+            );
 
             Networking.getInstance(this).addToRequestQueue(jsArrayRequest);
         } else {
+            if (switcher.getDisplayedChild() == 0) {
+                //if the recyclerview is displayed at the moment, switch to the empty view
+                switcher.showNext();
+            }
             Snackbar sb = Snackbar.make(drawer, R.string.no_connection, Snackbar.LENGTH_LONG);
             TextView sbText = (TextView) sb.getView().findViewById(android.support.design.R.id.snackbar_text);
             sbText.setTextSize(20f);
             sb.show();
-        }
-        if(mRecyclerView.getAdapter() == null){
-            List<ArrowheadService> emptyList = new ArrayList<>();
-            mAdapter = new ArrowheadServices_Adapter(emptyList);
-            mRecyclerView.setAdapter(mAdapter);
-            mRecyclerView.setEmptyView(emptyView);
         }
 
         srl.setRefreshing(false);

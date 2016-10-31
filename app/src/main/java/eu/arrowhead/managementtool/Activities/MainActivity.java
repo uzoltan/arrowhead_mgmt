@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import eu.arrowhead.managementtool.R;
 
@@ -55,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
         Log.i("json test", json2);*/
     }
 
+    public void TextViewClicked(View view) {
+        ViewSwitcher switcher = (ViewSwitcher) findViewById(R.id.my_switcher);
+        switcher.showNext(); //or switcher.showPrevious();
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -93,4 +100,5 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
     }
+
 }

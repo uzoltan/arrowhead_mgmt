@@ -18,28 +18,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <eu.arrowhead.managementtool.CustomViews.RecyclerViewEmptySupport
-            android:id="@+id/service_list"
+        <ViewSwitcher
+            android:id="@+id/service_list_switcher"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            android:inAnimation="@android:anim/fade_in"
+            android:outAnimation="@android:anim/fade_out">
 
-        <LinearLayout
-            android:id="@+id/empty_recview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:textAlignment="center">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/service_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
 
+            <!-- TODO imageview-val custom icon text helyett mutatósabb-->
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:id="@+id/recview_empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:text="@string/no_data_available"
-                android:textSize="25sp"/>
+                android:textSize="25sp" />
 
-        </LinearLayout>
-
+        </ViewSwitcher>
     </android.support.v4.widget.SwipeRefreshLayout>
-
 </RelativeLayout>

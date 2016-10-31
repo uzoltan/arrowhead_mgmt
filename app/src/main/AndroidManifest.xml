@@ -21,8 +21,16 @@
         <activity
             android:name=".Activities.ArrowheadServices"
             android:label="@string/title_activity_arrowhead_services"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Activities.ArrowheadService_Detail"
+            android:label="@string/title_activity_arrowhead_service__detail"
+            android:parentActivityName=".Activities.ArrowheadServices"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="eu.arrowhead.managementtool.Activities.ArrowheadServices" />
         </activity>
     </application>
 
