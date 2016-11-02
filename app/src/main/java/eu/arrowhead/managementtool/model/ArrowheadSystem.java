@@ -1,7 +1,9 @@
 package eu.arrowhead.managementtool.model;
 
 
-public class ArrowheadSystem {
+import java.io.Serializable;
+
+public class ArrowheadSystem implements Serializable {
 
 	private String systemGroup;
 	private String systemName;

@@ -97,7 +97,7 @@ public class ArrowheadServices extends AppCompatActivity implements
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            if(switcher.getDisplayedChild() == 0){
+                            if(switcher.getDisplayedChild() == 0 && serviceList.size() == 0){
                                 //if the recyclerview is displayed at the moment, switch to the empty view
                                 switcher.showNext();
                             }
@@ -107,7 +107,7 @@ public class ArrowheadServices extends AppCompatActivity implements
 
             Networking.getInstance(this).addToRequestQueue(jsArrayRequest);
         } else {
-            if (switcher.getDisplayedChild() == 0) {
+            if (switcher.getDisplayedChild() == 0 && serviceList.size() == 0) {
                 //if the recyclerview is displayed at the moment, switch to the empty view
                 switcher.showNext();
             }

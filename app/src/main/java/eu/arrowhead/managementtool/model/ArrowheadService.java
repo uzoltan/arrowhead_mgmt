@@ -1,9 +1,10 @@
 package eu.arrowhead.managementtool.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrowheadService {
+public class ArrowheadService implements Serializable {
 
 	private String serviceGroup;
 	private String serviceDefinition;

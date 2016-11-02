@@ -9,4 +9,8 @@
     <string name="no_connection">No internet connection!</string>
     <string name="no_data_available">No data available...</string>
     <string name="title_activity_arrowhead_service__detail">ArrowheadService_Detail</string>
+    <string name="service_group_label">Service group:</string>
+    <string name="service_definition_label">Service definition:</string>
+    <string name="interfaces_label">Interfaces:</string>
+    <string name="no_interface_text">This service has no its interface stored in the database.</string>
 </resources>

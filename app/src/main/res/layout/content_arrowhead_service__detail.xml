@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_arrowhead_service__detail"
@@ -18,53 +18,85 @@
     <!-- kipróbálni majd, hogy melyik elrendezés néz ki jobban. ez még csak egy váz itt -->
 
     <TextView
+        android:id="@+id/service_group_label"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:labelFor="@id/service_group_edittext"
+        android:text="@string/service_group_label"
+        android:textStyle="bold" />
 
     <ViewSwitcher
+        android:id="@+id/service_group_switcher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/service_group_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <EditText
+            android:id="@+id/service_group_edittext"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text" />
     </ViewSwitcher>
 
     <TextView
+        android:id="@+id/service_definition_label"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:labelFor="@id/service_definition_edittext"
+        android:text="@string/service_definition_label"
+        android:textStyle="bold" />
 
     <ViewSwitcher
+        android:id="@+id/service_definition_switcher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/service_definition_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <EditText
+            android:id="@+id/service_definition_edittext"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text" />
     </ViewSwitcher>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ViewSwitcher
+        android:id="@+id/interface_list_switcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <eu.arrowhead.managementtool.CustomViews.RecyclerViewEmptySupport
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/interfaces_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/interfaces_label"
+                android:textStyle="bold" />
 
-    <eu.arrowhead.managementtool.CustomViews.RecyclerViewEmptySupport
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/interface_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical" />
+        </LinearLayout>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/interface_list_empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_interface_text" />
+
+    </ViewSwitcher>
+
+</LinearLayout>

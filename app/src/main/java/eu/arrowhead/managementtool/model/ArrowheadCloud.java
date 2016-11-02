@@ -1,7 +1,9 @@
 package eu.arrowhead.managementtool.model;
 
 
-public class ArrowheadCloud {
+import java.io.Serializable;
+
+public class ArrowheadCloud implements Serializable {
 
 	private String operator;
 	private String cloudName;
