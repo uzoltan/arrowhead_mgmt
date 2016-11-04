@@ -1,4 +1,4 @@
-package eu.arrowhead.managementtool.Activities;
+package eu.arrowhead.managementtool.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

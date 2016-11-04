@@ -1,4 +1,4 @@
-package eu.arrowhead.managementtool.Utility;
+package eu.arrowhead.managementtool.utility;
 
 import android.content.Context;
 import android.graphics.Bitmap;

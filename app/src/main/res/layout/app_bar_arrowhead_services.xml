@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/SecondaryBackgroundColor"
     android:fitsSystemWindows="true"
-    tools:context="eu.arrowhead.managementtool.Activities.ArrowheadServices">
+    tools:context="eu.arrowhead.managementtool.activities.ArrowheadServices">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/services_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"

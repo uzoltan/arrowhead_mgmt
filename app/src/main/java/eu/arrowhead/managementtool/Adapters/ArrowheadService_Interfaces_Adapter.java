@@ -1,4 +1,4 @@
-package eu.arrowhead.managementtool.Adapters;
+package eu.arrowhead.managementtool.adapters;
 
 
 import android.support.v7.widget.RecyclerView;

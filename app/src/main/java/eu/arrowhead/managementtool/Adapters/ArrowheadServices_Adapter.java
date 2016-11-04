@@ -1,4 +1,4 @@
-package eu.arrowhead.managementtool.Adapters;
+package eu.arrowhead.managementtool.adapters;
 
 
 import android.content.Context;
@@ -12,14 +12,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import eu.arrowhead.managementtool.Activities.ArrowheadService_Detail;
+import eu.arrowhead.managementtool.activities.ArrowheadService_Detail;
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.model.ArrowheadService;
 
 public class ArrowheadServices_Adapter extends RecyclerView.Adapter<ArrowheadServices_Adapter.ServiceViewHolder>{
 
     private List<ArrowheadService> serviceList;
-    private ArrowheadService service;
     private Context context;
 
     public ArrowheadServices_Adapter(List<ArrowheadService> serviceList) {
@@ -35,7 +34,7 @@ public class ArrowheadServices_Adapter extends RecyclerView.Adapter<ArrowheadSer
 
     @Override
     public void onBindViewHolder(ServiceViewHolder holder, int position) {
-        service = serviceList.get(position);
+        final ArrowheadService service = serviceList.get(position);
         holder.vServiceGroup.setText(service.getServiceGroup());
         holder.vServiceName.setText(service.getServiceDefinition());
 

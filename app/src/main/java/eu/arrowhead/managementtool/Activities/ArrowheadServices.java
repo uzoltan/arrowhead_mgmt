@@ -1,4 +1,4 @@
-package eu.arrowhead.managementtool.Activities;
+package eu.arrowhead.managementtool.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -26,10 +26,10 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.arrowhead.managementtool.Adapters.ArrowheadServices_Adapter;
+import eu.arrowhead.managementtool.adapters.ArrowheadServices_Adapter;
 import eu.arrowhead.managementtool.R;
-import eu.arrowhead.managementtool.Utility.Networking;
-import eu.arrowhead.managementtool.Utility.Utility;
+import eu.arrowhead.managementtool.utility.Networking;
+import eu.arrowhead.managementtool.utility.Utility;
 import eu.arrowhead.managementtool.model.ArrowheadService;
 
 public class ArrowheadServices extends AppCompatActivity implements
@@ -51,7 +51,7 @@ public class ArrowheadServices extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arrowhead_services);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.services_toolbar);
         setSupportActionBar(toolbar);
 
         //navigation drawer setup
@@ -68,9 +68,6 @@ public class ArrowheadServices extends AppCompatActivity implements
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        /*DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
-                DividerItemDecoration.VERTICAL);
-        mRecyclerView.addItemDecoration(dividerItemDecoration);*/
         srl = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_service_list);
         srl.setOnRefreshListener(this);
 
@@ -132,19 +129,14 @@ public class ArrowheadServices extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.arrowhead_services, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

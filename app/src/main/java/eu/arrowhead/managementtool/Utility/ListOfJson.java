@@ -1,4 +1,4 @@
-package eu.arrowhead.managementtool.Utility;
+package eu.arrowhead.managementtool.utility;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
