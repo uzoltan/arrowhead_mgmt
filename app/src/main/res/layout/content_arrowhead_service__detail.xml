@@ -34,7 +34,7 @@
             android:id="@+id/service_group_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/service_group_edittext"
@@ -60,7 +60,7 @@
             android:id="@+id/service_definition_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/service_definition_edittext"
@@ -110,17 +110,19 @@
 
             <EditText
                 android:id="@+id/interfaces_edittext"
-                android:inputType="text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="text" />
 
             <Button
                 android:id="@+id/save_changes_button"
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:text="@string/save_changes"/>
+                android:layout_marginTop="10dp"
+                android:text="@string/save_changes"
+                android:textSize="20sp"/>
 
         </LinearLayout>
 

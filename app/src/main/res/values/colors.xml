@@ -5,4 +5,5 @@
     <color name="colorAccent">#FFA000</color>
     <color name="PrimaryBackgroundColor">#FFFFFF</color>
     <color name="SecondaryBackgroundColor">#E8EAF6</color>
+    <color name="colorDisabled">#9E9E9E</color>
 </resources>
