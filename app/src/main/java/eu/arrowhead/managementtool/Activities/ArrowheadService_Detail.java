@@ -3,6 +3,7 @@ package eu.arrowhead.managementtool.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,6 +40,8 @@ public class ArrowheadService_Detail extends AppCompatActivity {
     //TODO sendrequest függvények megírása, pozitív/negatív response ágak megírása.
     //sikeres updatenél maradunk az activityben, viewswitcherek vissza, updatelt értékek
     //sikeres törlésnél activityn finish()
+
+    //TODO edites edittextek fontja legyen ugyanolyan méretű és vastagságú, mint a textview amit helyettesít
 
     private CoordinatorLayout rootView;
     private Button saveButton;
@@ -85,14 +89,19 @@ public class ArrowheadService_Detail extends AppCompatActivity {
                 DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
         mAdapter = new ArrowheadService_Interfaces_Adapter(service.getInterfaces());
+        //NOTE: there is no empty view for the interface recview, but this is a minor problem, low priority
         mRecyclerView.setAdapter(mAdapter);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ArrowheadService service = new ArrowheadService(serviceGroupEt.getText().toString(), serviceDefinitionEt.getText().toString(), null, null);
-                List<String> interfaces = Arrays.asList(interfaceEt.getText().toString().split(","));
+                List<String> interfaces = new ArrayList<>();
+                if(!interfaceEt.getText().toString().equals("")){
+                    interfaces = Arrays.asList(interfaceEt.getText().toString().split(","));
+                }
                 service.setInterfaces(interfaces);
+
                 if (!serviceGroupEt.getText().equals(serviceGroupTv.getText()) ||
                         !serviceDefinitionEt.getText().equals(serviceDefinitionTv.getText())) {
                     sendUpdateRequest(service);
@@ -104,22 +113,31 @@ public class ArrowheadService_Detail extends AppCompatActivity {
         });
     }
 
-    public void sendUpdateRequest(ArrowheadService service) {
+    public void sendUpdateRequest(final ArrowheadService service) {
         if (Utility.isConnected(this)) {
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.PUT, URL, Utility.toJsonObject(service),
                     new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
-                            //TODO
+                            mAdapter = new ArrowheadService_Interfaces_Adapter(service.getInterfaces());
+                            mRecyclerView.setAdapter(mAdapter);
+
+                            sgSwitcher.showPrevious();
+                            sdSwitcher.showPrevious();
+                            interfaceSwitcher.showPrevious();
+
+                            Snackbar.make(rootView, R.string.service_update_success, Snackbar.LENGTH_LONG).show();
                         }
                     },
                     new Response.ErrorListener() {
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            //TODO
-                            //TODO test how can we get here!
+                            Toast.makeText(ArrowheadService_Detail.this, R.string.service_update_error, Toast.LENGTH_LONG).show();
+                            sgSwitcher.showPrevious();
+                            sdSwitcher.showPrevious();
+                            interfaceSwitcher.showPrevious();
                         }
                     }
             );
@@ -140,6 +158,18 @@ public class ArrowheadService_Detail extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        //Check if the service is being edited right now. (Could use any of the 3 view switchers to check.)
+        if (sgSwitcher.getDisplayedChild() == 1) {
+            sgSwitcher.showPrevious();
+            sdSwitcher.showPrevious();
+            interfaceSwitcher.showPrevious();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.arrowhead_service_detail, menu);
         return true;
@@ -148,7 +178,7 @@ public class ArrowheadService_Detail extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        //TODO lehessen visszalépni a szerkesztésből egyszerűen
         if (id == R.id.action_edit_service) {
             serviceGroupEt.setText(serviceGroupTv.getText());
             serviceDefinitionEt.setText(serviceDefinitionTv.getText());

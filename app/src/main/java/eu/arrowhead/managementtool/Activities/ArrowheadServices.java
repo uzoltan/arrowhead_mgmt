@@ -115,7 +115,6 @@ public class ArrowheadServices extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.services_root_view);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -160,7 +159,6 @@ public class ArrowheadServices extends AppCompatActivity implements
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.services_root_view);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

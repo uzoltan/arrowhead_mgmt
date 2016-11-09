@@ -7,7 +7,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="no_connection">No internet connection!</string>
-    <string name="no_data_available">No data available...</string>
+    <string name="no_data_available">No data available…</string>
     <string name="title_activity_arrowhead_service__detail">Service details</string>
     <string name="service_group_label">Service group:</string>
     <string name="service_definition_label">Service definition:</string>
@@ -15,5 +15,7 @@
     <string name="no_interface_text">This service has no interfaces stored in the database.</string>
     <string name="interfaces_edit_label">Comma separated interface list:</string>
     <string name="save_changes">Save changes</string>
-    <string name="service_update_request">Service update request has been sent...</string>
+    <string name="service_update_request">Service update request has been sent…</string>
+    <string name="service_update_error">Service update unsuccessful, server side error.</string>
+    <string name="service_update_success">Service update is successful.</string>
 </resources>
