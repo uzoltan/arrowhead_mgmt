@@ -12,7 +12,6 @@ import com.android.volley.toolbox.Volley;
 //Singleton Volley class for handling network requests.
 public class Networking {
 
-    //TODO does this needs fixing?
     private static Networking mInstance;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;

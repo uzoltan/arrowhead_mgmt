@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.android.volley.Request;
@@ -26,11 +25,11 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.arrowhead.managementtool.adapters.ArrowheadServices_Adapter;
 import eu.arrowhead.managementtool.R;
+import eu.arrowhead.managementtool.adapters.ArrowheadServices_Adapter;
+import eu.arrowhead.managementtool.model.ArrowheadService;
 import eu.arrowhead.managementtool.utility.Networking;
 import eu.arrowhead.managementtool.utility.Utility;
-import eu.arrowhead.managementtool.model.ArrowheadService;
 
 public class ArrowheadServices extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -55,7 +54,7 @@ public class ArrowheadServices extends AppCompatActivity implements
         setSupportActionBar(toolbar);
 
         //navigation drawer setup
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.services_root_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -108,10 +107,7 @@ public class ArrowheadServices extends AppCompatActivity implements
                 //if the recyclerview is displayed at the moment, switch to the empty view
                 switcher.showNext();
             }
-            Snackbar sb = Snackbar.make(drawer, R.string.no_connection, Snackbar.LENGTH_LONG);
-            TextView sbText = (TextView) sb.getView().findViewById(android.support.design.R.id.snackbar_text);
-            sbText.setTextSize(20f);
-            sb.show();
+            Utility.showNoConnectionSnackbar(drawer);
         }
 
         srl.setRefreshing(false);
@@ -119,7 +115,7 @@ public class ArrowheadServices extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.services_root_view);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -164,7 +160,7 @@ public class ArrowheadServices extends AppCompatActivity implements
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.services_root_view);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

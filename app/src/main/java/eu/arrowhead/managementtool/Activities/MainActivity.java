@@ -8,12 +8,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import org.json.JSONArray;
+
 import eu.arrowhead.managementtool.R;
 
 //TESTING GSON and VOLLEY library shit
 public class MainActivity extends AppCompatActivity {
 
     public TextView mTextView;
+    public final static String url = "http://arrowhead.tmit.bme.hu:8081/api/common/clouds";
+    public JSONArray payloadJson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mTextView = (TextView) findViewById(R.id.textview);
         Button servicesLauncher = (Button) findViewById(R.id.services_launcher);
+
         servicesLauncher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -29,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*ArrowheadCloud cloud = new ArrowheadCloud("1", "2", "3", "4", "5", "6");
-        ArrayList<String> interfaces = new ArrayList<String>();
+        /*ArrayList<String> interfaces = new ArrayList<String>();
         interfaces.add("json");
         interfaces.add("json");
         interfaces.add("json");

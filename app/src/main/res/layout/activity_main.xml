@@ -10,11 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="eu.arrowhead.managementtool.activities.MainActivity">
 
-    <TextView
-        android:id="@+id/textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
 
     <Button
         android:id="@+id/services_launcher"
@@ -48,4 +43,11 @@
             android:singleLine="true"
             android:textSize="25sp"/>
     </ViewSwitcher>
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        android:layout_toRightOf="@id/services_launcher"/>
 </RelativeLayout>

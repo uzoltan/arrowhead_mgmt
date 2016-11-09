@@ -2,6 +2,7 @@ package eu.arrowhead.managementtool.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,11 +14,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.List;
 
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.adapters.ArrowheadService_Interfaces_Adapter;
 import eu.arrowhead.managementtool.model.ArrowheadService;
+import eu.arrowhead.managementtool.utility.Networking;
+import eu.arrowhead.managementtool.utility.Utility;
 
 public class ArrowheadService_Detail extends AppCompatActivity {
 
@@ -25,6 +39,7 @@ public class ArrowheadService_Detail extends AppCompatActivity {
     //sikeres updatenél maradunk az activityben, viewswitcherek vissza, updatelt értékek
     //sikeres törlésnél activityn finish()
 
+    private CoordinatorLayout rootView;
     private Button saveButton;
     private TextView serviceGroupTv, serviceDefinitionTv;
     private EditText serviceGroupEt, serviceDefinitionEt, interfaceEt;
@@ -45,6 +60,7 @@ public class ArrowheadService_Detail extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        rootView = (CoordinatorLayout) findViewById(R.id.service_detail_root_view);
         saveButton = (Button) findViewById(R.id.save_changes_button);
         serviceGroupTv = (TextView) findViewById(R.id.service_group_textview);
         serviceDefinitionTv = (TextView) findViewById(R.id.service_definition_textview);
@@ -74,29 +90,52 @@ public class ArrowheadService_Detail extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!serviceGroupEt.getText().equals(serviceGroupTv.getText()) ||
-                        !serviceDefinitionEt.getText().equals(serviceDefinitionTv.getText())){
-                    sendUpdateRequest();
-                }
-                else{
+                ArrowheadService service = new ArrowheadService(serviceGroupEt.getText().toString(), serviceDefinitionEt.getText().toString(), null, null);
+                List<String> interfaces = Arrays.asList(interfaceEt.getText().toString().split(","));
+                service.setInterfaces(interfaces);
+                if (!serviceGroupEt.getText().equals(serviceGroupTv.getText()) ||
+                        !serviceDefinitionEt.getText().equals(serviceDefinitionTv.getText())) {
+                    sendUpdateRequest(service);
+                } else {
                     //If the user changes the service group or service definition, we have to do a delete+post combo
-                    sendDeleteRequest(true);
+                    sendDeleteRequest(service, true);
                 }
             }
         });
-        //TODO ezt használni majd interface lista készítéséhez a user inputból
-        //List<String> elephantList = Arrays.asList(str.split(","));
     }
 
-    public void sendUpdateRequest(){
+    public void sendUpdateRequest(ArrowheadService service) {
+        if (Utility.isConnected(this)) {
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.PUT, URL, Utility.toJsonObject(service),
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            //TODO
+                        }
+                    },
+                    new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //TODO
+                            //TODO test how can we get here!
+                        }
+                    }
+            );
+
+            Networking.getInstance(this).addToRequestQueue(jsObjRequest);
+            Toast.makeText(ArrowheadService_Detail.this, R.string.service_update_request, Toast.LENGTH_SHORT).show();
+        } else {
+            Utility.showNoConnectionSnackbar(rootView);
+        }
+    }
+
+    public void sendDeleteRequest(ArrowheadService service, boolean forcedUpdate) {
 
     }
 
-    public void sendDeleteRequest(boolean forcedUpdate){
-
-    }
-
-    public void sendPostRequest(){
+    public void sendPostRequest(ArrowheadService service) {
 
     }
 

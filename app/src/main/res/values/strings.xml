@@ -15,4 +15,5 @@
     <string name="no_interface_text">This service has no interfaces stored in the database.</string>
     <string name="interfaces_edit_label">Comma separated interface list:</string>
     <string name="save_changes">Save changes</string>
+    <string name="service_update_request">Service update request has been sent...</string>
 </resources>
