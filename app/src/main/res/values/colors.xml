@@ -6,4 +6,5 @@
     <color name="PrimaryBackgroundColor">#FFFFFF</color>
     <color name="SecondaryBackgroundColor">#E8EAF6</color>
     <color name="colorDisabled">#9E9E9E</color>
+    <color name="black">#000000</color>
 </resources>

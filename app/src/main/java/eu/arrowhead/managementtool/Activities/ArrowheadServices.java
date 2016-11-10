@@ -69,8 +69,14 @@ public class ArrowheadServices extends AppCompatActivity implements
         mRecyclerView.setLayoutManager(mLayoutManager);
         srl = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_service_list);
         srl.setOnRefreshListener(this);
+    }
 
+    @Override
+    protected void onResume() {
+        //We send the request here, because the user can delete a list element in the detail activity, and we want the list to update automatically.
+        //TODO problem with this is that the scroll position is lost, could check it it boolean if refresh is nessecary or not
         sendRequest();
+        super.onResume();
     }
 
     public void sendRequest(){

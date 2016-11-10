@@ -18,4 +18,12 @@
     <string name="service_update_request">Service update request has been sent…</string>
     <string name="service_update_error">Service update unsuccessful, server side error.</string>
     <string name="service_update_success">Service update is successful.</string>
+    <string name="service_delete_request">Service delete request has been sent…</string>
+    <string name="deleted">Deleted</string>
+    <string name="service_delete_error">Deleting service unsuccessful, server side error.</string>
+    <string name="confirm_delete">Are you sure you want to delete?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
 </resources>
