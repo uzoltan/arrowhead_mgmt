@@ -14,9 +14,6 @@
     tools:context="eu.arrowhead.managementtool.activities.ArrowheadService_Detail"
     tools:showIn="@layout/activity_arrowhead_service__detail">
 
-    <!-- labelek lehetnek bold típussal, ugyanazzal a betűmérettel, és férjen ki egy sorba? mondjuk akkor eléggé sok lesz az üres tér valszeg...-->
-    <!-- kipróbálni majd, hogy melyik elrendezés néz ki jobban. ez még csak egy váz itt -->
-
     <TextView
         android:id="@+id/service_group_label"
         android:layout_width="wrap_content"

@@ -4,18 +4,28 @@ package eu.arrowhead.managementtool.utility;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import eu.arrowhead.managementtool.R;
+import eu.arrowhead.managementtool.fragments.ServerError;
+import eu.arrowhead.managementtool.model.ErrorMessage;
 
 
 public final class Utility {
@@ -64,6 +74,26 @@ public final class Utility {
         TextView sbText = (TextView) sb.getView().findViewById(android.support.design.R.id.snackbar_text);
         sbText.setTextSize(20f);
         sb.show();
+    }
+
+    public static void showServerErrorFragment(VolleyError error, AppCompatActivity context){
+        NetworkResponse response = error.networkResponse;
+        if (response != null) { //error instanceof ServerError condition too?
+            try {
+                String serverResponse = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                ErrorMessage errorMessage = fromJsonObject(serverResponse, ErrorMessage.class);
+                DialogFragment newFragment = new ServerError();
+                Bundle args = new Bundle();
+                args.putInt("status_code", errorMessage.getErrorCode());
+                args.putString("error_message", errorMessage.getErrorMessage());
+                newFragment.setArguments(args);
+                newFragment.show(context.getSupportFragmentManager(), ServerError.TAG);
+            } catch (UnsupportedEncodingException e) {
+                // Couldn't properly decode data to string
+                Toast.makeText(context, R.string.server_side_error, Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }
     }
 
 

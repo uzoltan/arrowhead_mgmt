@@ -26,4 +26,14 @@
     <string name="no">No</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
+    <string name="server_error">Server Error</string>
+    <string name="server_side_error">Error on the server side!</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="status_code">Status code:</string>
+    <string name="error_message">Error message:</string>
+    <string name="action_add_service">Add Service</string>
+    <string name="save_service">Save service</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_new_service_title">Add a new service</string>
 </resources>

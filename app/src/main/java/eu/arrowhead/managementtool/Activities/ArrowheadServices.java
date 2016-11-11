@@ -3,6 +3,7 @@ package eu.arrowhead.managementtool.activities;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,7 +19,6 @@ import android.widget.ViewSwitcher;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
 
@@ -27,13 +27,16 @@ import java.util.List;
 
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.adapters.ArrowheadServices_Adapter;
+import eu.arrowhead.managementtool.fragments.AddNewService;
 import eu.arrowhead.managementtool.model.ArrowheadService;
-import eu.arrowhead.managementtool.utility.Networking;
 import eu.arrowhead.managementtool.utility.Utility;
+import eu.arrowhead.managementtool.volley.JsonArrayRequest;
+import eu.arrowhead.managementtool.volley.Networking;
 
 public class ArrowheadServices extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
-        SwipeRefreshLayout.OnRefreshListener{
+        SwipeRefreshLayout.OnRefreshListener,
+        AddNewService.AddNewServiceListener{
 
     private DrawerLayout drawer;
     private RecyclerView mRecyclerView;
@@ -120,6 +123,11 @@ public class ArrowheadServices extends AppCompatActivity implements
     }
 
     @Override
+    public void onSaveServiceButtonClicked(DialogFragment dialog) {
+        //TODO
+    }
+
+    @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -138,8 +146,9 @@ public class ArrowheadServices extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_add_service) {
+            DialogFragment newFragment = new AddNewService();
+            newFragment.show(getSupportFragmentManager(), AddNewService.TAG);
         }
 
         return super.onOptionsItemSelected(item);

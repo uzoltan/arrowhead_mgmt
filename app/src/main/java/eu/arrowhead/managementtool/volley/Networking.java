@@ -1,4 +1,4 @@
-package eu.arrowhead.managementtool.utility;
+package eu.arrowhead.managementtool.volley;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -11,7 +11,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,38 +21,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.adapters.ArrowheadService_Interfaces_Adapter;
 import eu.arrowhead.managementtool.fragments.ConfirmDelete;
 import eu.arrowhead.managementtool.model.ArrowheadService;
-import eu.arrowhead.managementtool.utility.Networking;
 import eu.arrowhead.managementtool.utility.Utility;
+import eu.arrowhead.managementtool.volley.JsonArrayRequest;
+import eu.arrowhead.managementtool.volley.JsonObjectRequest;
+import eu.arrowhead.managementtool.volley.Networking;
 
 public class ArrowheadService_Detail extends AppCompatActivity implements
         ConfirmDelete.ConfirmDeleteListener {
-
-    //TODO edites edittextek fontja legyen ugyanolyan méretű és vastagságú, mint a textview amit helyettesít
 
     private CoordinatorLayout rootView;
     private Button saveButton;
@@ -114,12 +104,12 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
                 }
                 service.setInterfaces(interfaces);
 
-                if (!serviceGroupEt.getText().equals(serviceGroupTv.getText()) ||
-                        !serviceDefinitionEt.getText().equals(serviceDefinitionTv.getText())) {
-                    sendUpdateRequest(service);
-                } else {
+                if (!serviceGroupEt.getText().toString().equals(serviceGroupTv.getText().toString()) ||
+                        !serviceDefinitionEt.getText().toString().equals(serviceDefinitionTv.getText().toString())) {
                     //If the user changes the service group or service definition, we have to do a delete+post combo
                     sendDeleteRequest(service, true);
+                } else {
+                    sendUpdateRequest(service);
                 }
 
                 //hides the soft input keyboard
@@ -150,7 +140,8 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(ArrowheadService_Detail.this, R.string.service_update_error, Toast.LENGTH_LONG).show();
+                            Utility.showServerErrorFragment(error, ArrowheadService_Detail.this);
+
                             sgSwitcher.showPrevious();
                             sdSwitcher.showPrevious();
                             interfaceSwitcher.showPrevious();
@@ -176,7 +167,7 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
                             if (forcedUpdate) {
                                 sendPostRequest(service);
                             } else {
-                                Snackbar.make(rootView, R.string.deleted, Snackbar.LENGTH_LONG).show();
+                                Toast.makeText(ArrowheadService_Detail.this, R.string.deleted, Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                         }
@@ -185,47 +176,20 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            //TODO add this kind of error handling to all request, so the user can see the server response
-                            //TODO after adding header the delete works, but the app still signals error for some reason, check the reason and cleanup this part after
-                            NetworkResponse response = error.networkResponse;
-                            if (error instanceof ServerError && response != null) {
-                                try {
-                                    String res = new String(response.data,
-                                            HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                                    // Now you can use any deserializer to make sense of data
-                                    Log.i("testing", res);
-                                } catch (UnsupportedEncodingException e1) {
-                                    // Couldn't properly decode data to string
-                                    e1.printStackTrace();
-                                }
-                            }
+                            Utility.showServerErrorFragment(error, ArrowheadService_Detail.this);
 
                             if (forcedUpdate) {
-                                Toast.makeText(ArrowheadService_Detail.this, R.string.service_update_error, Toast.LENGTH_LONG).show();
                                 sgSwitcher.showPrevious();
                                 sdSwitcher.showPrevious();
                                 interfaceSwitcher.showPrevious();
-                            } else {
-                                Toast.makeText(ArrowheadService_Detail.this, R.string.service_delete_error, Toast.LENGTH_LONG).show();
                             }
                         }
                     }
-            )
-                //TODO not sure how this syntax works. maybe i should create custom request for clealer code. and to avoid putting this method everywhere
-            {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json");
-                    return headers;
-                }
-            };
+            );
 
             Networking.getInstance(this).addToRequestQueue(jsObjRequest);
             if (forcedUpdate) {
                 Toast.makeText(ArrowheadService_Detail.this, R.string.service_update_request, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(ArrowheadService_Detail.this, R.string.service_delete_request, Toast.LENGTH_SHORT).show();
             }
         } else {
             Utility.showNoConnectionSnackbar(rootView);
@@ -256,7 +220,8 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(ArrowheadService_Detail.this, R.string.service_update_error, Toast.LENGTH_LONG).show();
+                        Utility.showServerErrorFragment(error, ArrowheadService_Detail.this);
+
                         sgSwitcher.showPrevious();
                         sdSwitcher.showPrevious();
                         interfaceSwitcher.showPrevious();
