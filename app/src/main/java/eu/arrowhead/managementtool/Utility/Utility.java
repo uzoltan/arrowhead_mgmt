@@ -2,12 +2,14 @@ package eu.arrowhead.managementtool.utility;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import eu.arrowhead.managementtool.R;
+import eu.arrowhead.managementtool.activities.ArrowheadServices;
+import eu.arrowhead.managementtool.activities.ArrowheadSystems;
 import eu.arrowhead.managementtool.fragments.ServerError;
 import eu.arrowhead.managementtool.model.ErrorMessage;
 
@@ -96,5 +100,23 @@ public final class Utility {
         }
     }
 
+    public static boolean handleNavigationItemClick(MenuItem item, AppCompatActivity activity){
+        int id = item.getItemId();
+
+        if (id == R.id.nav_arrowhead_systems) {
+            if(!(activity.getClass() == ArrowheadSystems.class)){
+                Intent intent = new Intent(activity, ArrowheadSystems.class);
+                activity.startActivity(intent);
+            }
+        }
+        else if(id == R.id.nav_arrowhead_services){
+            if(!(activity.getClass() == ArrowheadServices.class)){
+                Intent intent = new Intent(activity, ArrowheadServices.class);
+                activity.startActivity(intent);
+            }
+        }
+
+        return true;
+    }
 
 }

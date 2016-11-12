@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <!-- TODO custom iconok keresése -->
+        <item
+            android:id="@+id/nav_arrowhead_systems"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/nav_arrowhead_systems" />
+        <item
+            android:id="@+id/nav_arrowhead_services"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/nav_arrowhead_services" />
+    </group>
+
+</menu>

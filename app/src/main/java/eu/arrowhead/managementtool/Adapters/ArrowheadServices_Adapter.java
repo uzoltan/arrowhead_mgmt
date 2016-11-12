@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import eu.arrowhead.managementtool.activities.ArrowheadService_Detail;
 import eu.arrowhead.managementtool.R;
+import eu.arrowhead.managementtool.activities.ArrowheadService_Detail;
 import eu.arrowhead.managementtool.model.ArrowheadService;
 
 public class ArrowheadServices_Adapter extends RecyclerView.Adapter<ArrowheadServices_Adapter.ServiceViewHolder>{
@@ -22,6 +22,10 @@ public class ArrowheadServices_Adapter extends RecyclerView.Adapter<ArrowheadSer
     private Context context;
 
     public ArrowheadServices_Adapter(List<ArrowheadService> serviceList) {
+        this.serviceList = serviceList;
+    }
+
+    public void setServiceList(List<ArrowheadService> serviceList){
         this.serviceList = serviceList;
     }
 

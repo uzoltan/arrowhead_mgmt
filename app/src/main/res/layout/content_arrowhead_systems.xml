@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_arrowhead_systems"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/recycleview_vertical_margin"
+    android:paddingLeft="@dimen/recycleview_horizontal_margin"
+    android:paddingRight="@dimen/recycleview_horizontal_margin"
+    android:paddingTop="@dimen/recycleview_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="eu.arrowhead.managementtool.activities.ArrowheadSystems"
+    tools:showIn="@layout/app_bar_arrowhead_systems">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_system_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ViewSwitcher
+            android:id="@+id/system_list_switcher"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inAnimation="@android:anim/fade_in"
+            android:outAnimation="@android:anim/fade_out">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/system_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
+
+            <!-- TODO imageview-val custom icon text helyett mutatósabb-->
+            <TextView
+                android:id="@+id/system_list_empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/no_data_available"
+                android:textSize="25sp" />
+
+        </ViewSwitcher>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

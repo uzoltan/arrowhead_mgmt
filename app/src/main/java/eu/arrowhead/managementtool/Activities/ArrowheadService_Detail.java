@@ -48,7 +48,7 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
     private CoordinatorLayout rootView;
     private Button saveButton;
     private TextView serviceGroupTv, serviceDefinitionTv;
-    private EditText serviceGroupEt, serviceDefinitionEt, interfaceEt;
+    private EditText serviceGroupEt, serviceDefinitionEt, interfacesEt;
     private ViewSwitcher sgSwitcher, sdSwitcher, interfaceSwitcher;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -72,7 +72,7 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
         serviceDefinitionTv = (TextView) findViewById(R.id.service_definition_textview);
         serviceGroupEt = (EditText) findViewById(R.id.service_group_edittext);
         serviceDefinitionEt = (EditText) findViewById(R.id.service_definition_edittext);
-        interfaceEt = (EditText) findViewById(R.id.interfaces_edittext);
+        interfacesEt = (EditText) findViewById(R.id.interfaces_edittext);
         sgSwitcher = (ViewSwitcher) findViewById(R.id.service_group_switcher);
         sdSwitcher = (ViewSwitcher) findViewById(R.id.service_definition_switcher);
         interfaceSwitcher = (ViewSwitcher) findViewById(R.id.interface_list_switcher);
@@ -99,8 +99,8 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
             public void onClick(View view) {
                 ArrowheadService service = new ArrowheadService(serviceGroupEt.getText().toString(), serviceDefinitionEt.getText().toString(), null, null);
                 List<String> interfaces = new ArrayList<>();
-                if (!interfaceEt.getText().toString().equals("")) {
-                    interfaces = Arrays.asList(interfaceEt.getText().toString().split(","));
+                if (!interfacesEt.getText().toString().equals("")) {
+                    interfaces = Arrays.asList(interfacesEt.getText().toString().split(","));
                 }
                 service.setInterfaces(interfaces);
 

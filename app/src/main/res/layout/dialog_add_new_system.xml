@@ -9,43 +9,72 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
-        android:id="@+id/service_group_label"
+        android:id="@+id/system_group_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/service_group_label"
+        android:text="@string/system_group_label"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/service_group_edittext"
+        android:id="@+id/system_group_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text" />
 
     <TextView
-        android:id="@+id/service_definition_label"
+        android:id="@+id/system_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/service_definition_label"
+        android:text="@string/system_name_label"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/service_definition_edittext"
+        android:id="@+id/system_name_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text" />
 
     <TextView
-        android:id="@+id/interfaces_edit_label"
+        android:id="@+id/address_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/interfaces_edit_label"
+        android:text="@string/address_label"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/interfaces_edittext"
+        android:id="@+id/address_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/port_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/port_label"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+
+    <EditText
+        android:id="@+id/port_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/auth_info_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/auth_info_label"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/auth_info_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text" />

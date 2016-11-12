@@ -11,18 +11,25 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
+
+        <activity
+            android:name=".activities.ArrowheadSystems"
+            android:label="@string/title_activity_arrowhead_systems"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.ArrowheadServices"
             android:label="@string/title_activity_arrowhead_services"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activities.ArrowheadService_Detail"
             android:label="@string/title_activity_arrowhead_service__detail"
@@ -32,6 +39,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="eu.arrowhead.managementtool.activities.ArrowheadServices" />
         </activity>
+
     </application>
 
 </manifest>

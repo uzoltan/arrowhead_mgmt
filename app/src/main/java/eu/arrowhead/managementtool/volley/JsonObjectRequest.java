@@ -46,6 +46,7 @@ public class JsonObjectRequest extends JsonRequest<JSONObject> {
         }
     }
 
+    //For some reason DELETE requests fail without this header, but PUT and POST requests fail if this header is set.
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
         if(method == 3){
