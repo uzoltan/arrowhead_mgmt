@@ -14,30 +14,30 @@ import android.view.View;
 
 import eu.arrowhead.managementtool.R;
 
-public class AddNewService extends DialogFragment{
+public class AddNewSystemDialog extends DialogFragment{
 
-    public static final String TAG = "AddNewServiceFragment";
+    public static final String TAG = "AddNewSystemFragment";
 
-    public interface AddNewServiceListener {
-        public void onSaveServiceButtonClicked(DialogFragment dialog);
+    public interface AddNewSystemListener {
+        public void onSaveSystemButtonClicked(DialogFragment dialog);
     }
 
-    AddNewService.AddNewServiceListener mListener;
+    AddNewSystemDialog.AddNewSystemListener mListener;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View title = inflater.inflate(R.layout.dialog_add_new_service_title, null);
-        View content = inflater.inflate(R.layout.dialog_add_new_service, null);
+        View title = inflater.inflate(R.layout.dialog_add_new_system_title, null);
+        View content = inflater.inflate(R.layout.dialog_add_new_system, null);
 
         builder.setCustomTitle(title);
         builder.setView(content)
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onSaveServiceButtonClicked(AddNewService.this);
+                        mListener.onSaveSystemButtonClicked(AddNewSystemDialog.this);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -55,10 +55,10 @@ public class AddNewService extends DialogFragment{
 
         Activity activity = getActivity();
         try {
-            mListener = (AddNewService.AddNewServiceListener) activity;
+            mListener = (AddNewSystemDialog.AddNewSystemListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement AddNewServiceListener");
+                    + " must implement AddNewSystemListener");
         }
     }
 }

@@ -29,7 +29,7 @@ import java.util.List;
 
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.adapters.ArrowheadSystems_Adapter;
-import eu.arrowhead.managementtool.fragments.AddNewSystem;
+import eu.arrowhead.managementtool.fragments.AddNewSystemDialog;
 import eu.arrowhead.managementtool.model.ArrowheadSystem;
 import eu.arrowhead.managementtool.utility.Utility;
 import eu.arrowhead.managementtool.volley.JsonArrayRequest;
@@ -38,7 +38,7 @@ import eu.arrowhead.managementtool.volley.Networking;
 public class ArrowheadSystems extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         SwipeRefreshLayout.OnRefreshListener,
-        AddNewSystem.AddNewSystemListener{
+        AddNewSystemDialog.AddNewSystemListener{
 
     private DrawerLayout drawer;
     private RecyclerView mRecyclerView;
@@ -49,7 +49,6 @@ public class ArrowheadSystems extends AppCompatActivity implements
     private List<ArrowheadSystem> systemList = new ArrayList<>();
 
     //TODO replace hardwired url with proper solution
-    //TODO valamiért system lista nem tölt be + nav menüben ki van jelölve a service menüpont???
     private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/systems";
 
     @Override
@@ -58,6 +57,7 @@ public class ArrowheadSystems extends AppCompatActivity implements
         setContentView(R.layout.activity_arrowhead_systems);
         Toolbar toolbar = (Toolbar) findViewById(R.id.systems_toolbar);
         setSupportActionBar(toolbar);
+        setTitle(getResources().getString(R.string.title_activity_arrowhead_systems));
 
         //navigation drawer setup
         drawer = (DrawerLayout) findViewById(R.id.systems_root_view);
@@ -188,8 +188,8 @@ public class ArrowheadSystems extends AppCompatActivity implements
         int id = item.getItemId();
 
         if (id == R.id.action_add_system) {
-            DialogFragment newFragment = new AddNewSystem();
-            newFragment.show(getSupportFragmentManager(), AddNewSystem.TAG);
+            DialogFragment newFragment = new AddNewSystemDialog();
+            newFragment.show(getSupportFragmentManager(), AddNewSystemDialog.TAG);
         }
 
         return super.onOptionsItemSelected(item);

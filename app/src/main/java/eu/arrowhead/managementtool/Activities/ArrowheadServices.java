@@ -30,7 +30,7 @@ import java.util.List;
 
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.adapters.ArrowheadServices_Adapter;
-import eu.arrowhead.managementtool.fragments.AddNewService;
+import eu.arrowhead.managementtool.fragments.AddNewServiceDialog;
 import eu.arrowhead.managementtool.model.ArrowheadService;
 import eu.arrowhead.managementtool.utility.Utility;
 import eu.arrowhead.managementtool.volley.JsonArrayRequest;
@@ -39,7 +39,7 @@ import eu.arrowhead.managementtool.volley.Networking;
 public class ArrowheadServices extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         SwipeRefreshLayout.OnRefreshListener,
-        AddNewService.AddNewServiceListener {
+        AddNewServiceDialog.AddNewServiceListener {
 
     private DrawerLayout drawer;
     private RecyclerView mRecyclerView;
@@ -50,6 +50,7 @@ public class ArrowheadServices extends AppCompatActivity implements
     private List<ArrowheadService> serviceList = new ArrayList<>();
 
     //TODO replace hardwired url with proper solution
+    //TODO recview searchbar!
     private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/services";
 
     @Override
@@ -191,8 +192,8 @@ public class ArrowheadServices extends AppCompatActivity implements
         int id = item.getItemId();
 
         if (id == R.id.action_add_service) {
-            DialogFragment newFragment = new AddNewService();
-            newFragment.show(getSupportFragmentManager(), AddNewService.TAG);
+            DialogFragment newFragment = new AddNewServiceDialog();
+            newFragment.show(getSupportFragmentManager(), AddNewServiceDialog.TAG);
         }
 
         return super.onOptionsItemSelected(item);

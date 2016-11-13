@@ -2,6 +2,7 @@ package eu.arrowhead.managementtool.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import eu.arrowhead.managementtool.R;
+import eu.arrowhead.managementtool.activities.ArrowheadSystem_Detail;
 import eu.arrowhead.managementtool.model.ArrowheadSystem;
 
 public class ArrowheadSystems_Adapter extends RecyclerView.Adapter<ArrowheadSystems_Adapter.SystemViewHolder>{
@@ -31,7 +33,7 @@ public class ArrowheadSystems_Adapter extends RecyclerView.Adapter<ArrowheadSyst
     public SystemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_row_arrowhead_systems, parent, false);
         context = parent.getContext();
-        return new ArrowheadSystems_Adapter.SystemViewHolder(itemView);
+        return new SystemViewHolder(itemView);
     }
 
     @Override
@@ -43,16 +45,16 @@ public class ArrowheadSystems_Adapter extends RecyclerView.Adapter<ArrowheadSyst
         holder.vCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent(context, ArrowheadSystem_Detail.class);
+                Intent intent = new Intent(context, ArrowheadSystem_Detail.class);
                 intent.putExtra("arrowhead_system", system);
-                context.startActivity(intent);*/
+                context.startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return systemList.size();
     }
 
     static class SystemViewHolder extends RecyclerView.ViewHolder {

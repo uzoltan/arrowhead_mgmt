@@ -38,7 +38,7 @@
     <string name="add_new_service_title">Add a new service</string>
     <string name="add_service_successful">Successfully saved the new service.</string>
     <string name="add_system_successful">Successfully saved the new system.</string>
-    <string name="title_activity_arrowhead_systems">ArrowheadSystems</string>
+    <string name="title_activity_arrowhead_systems">Systems</string>
     <string name="system_group_label">System group:</string>
     <string name="system_name_label">System name:</string>
     <string name="address_label">Address:</string>
@@ -48,4 +48,5 @@
     <string name="action_add_system">Add System</string>
     <string name="nav_arrowhead_systems">Arrowhead Systems</string>
     <string name="nav_arrowhead_services">Arrowhead Services</string>
+    <string name="title_activity_arrowhead_systems__detail">System Details</string>
 </resources>

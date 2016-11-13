@@ -14,31 +14,33 @@ import android.view.View;
 
 import eu.arrowhead.managementtool.R;
 
-public class ConfirmDelete extends DialogFragment {
+public class AddNewServiceDialog extends DialogFragment{
 
-    public static final String TAG = "ConfirmDeleteFragment";
+    public static final String TAG = "AddNewServiceFragment";
 
-    public interface ConfirmDeleteListener {
-        public void onFragmentPositiveClick(DialogFragment dialog);
+    public interface AddNewServiceListener {
+        public void onSaveServiceButtonClicked(DialogFragment dialog);
     }
 
-    ConfirmDeleteListener mListener;
+    AddNewServiceDialog.AddNewServiceListener mListener;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View content = inflater.inflate(R.layout.dialog_confirm_delete, null);
+        View title = inflater.inflate(R.layout.dialog_add_new_service_title, null);
+        View content = inflater.inflate(R.layout.dialog_add_new_service, null);
 
+        builder.setCustomTitle(title);
         builder.setView(content)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onFragmentPositiveClick(ConfirmDelete.this);
+                        mListener.onSaveServiceButtonClicked(AddNewServiceDialog.this);
                     }
                 })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -53,10 +55,10 @@ public class ConfirmDelete extends DialogFragment {
 
         Activity activity = getActivity();
         try {
-            mListener = (ConfirmDeleteListener) activity;
+            mListener = (AddNewServiceDialog.AddNewServiceListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement ConfirmDeleteListener");
+                    + " must implement AddNewServiceListener");
         }
     }
 }

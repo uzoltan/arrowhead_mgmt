@@ -35,7 +35,7 @@ import java.util.List;
 
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.adapters.ArrowheadService_Interfaces_Adapter;
-import eu.arrowhead.managementtool.fragments.ConfirmDelete;
+import eu.arrowhead.managementtool.fragments.ConfirmDeleteDialog;
 import eu.arrowhead.managementtool.model.ArrowheadService;
 import eu.arrowhead.managementtool.utility.Utility;
 import eu.arrowhead.managementtool.volley.JsonArrayRequest;
@@ -43,7 +43,7 @@ import eu.arrowhead.managementtool.volley.JsonObjectRequest;
 import eu.arrowhead.managementtool.volley.Networking;
 
 public class ArrowheadService_Detail extends AppCompatActivity implements
-        ConfirmDelete.ConfirmDeleteListener {
+        ConfirmDeleteDialog.ConfirmDeleteListener {
 
     private CoordinatorLayout rootView;
     private Button saveButton;
@@ -61,7 +61,7 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arrowhead_service__detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.services_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.service_toolbar);
         setSupportActionBar(toolbar);
         //It will not be null ever, since we use a Toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -269,8 +269,8 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
             return true;
         }
         if (id == R.id.action_delete_service) {
-            DialogFragment newFragment = new ConfirmDelete();
-            newFragment.show(getSupportFragmentManager(), ConfirmDelete.TAG);
+            DialogFragment newFragment = new ConfirmDeleteDialog();
+            newFragment.show(getSupportFragmentManager(), ConfirmDeleteDialog.TAG);
         }
 
         return super.onOptionsItemSelected(item);

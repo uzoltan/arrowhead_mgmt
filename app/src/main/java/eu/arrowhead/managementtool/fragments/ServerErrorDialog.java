@@ -14,7 +14,7 @@ import android.widget.TextView;
 import eu.arrowhead.managementtool.R;
 
 //This fragment is used to display the error messages that came from the server side.
-public class ServerError extends DialogFragment {
+public class ServerErrorDialog extends DialogFragment {
 
     public static final String TAG = "ServerErrorFragment";
 

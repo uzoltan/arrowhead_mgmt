@@ -14,33 +14,31 @@ import android.view.View;
 
 import eu.arrowhead.managementtool.R;
 
-public class AddNewSystem extends DialogFragment{
+public class ConfirmDeleteDialog extends DialogFragment {
 
-    public static final String TAG = "AddNewSystemFragment";
+    public static final String TAG = "ConfirmDeleteFragment";
 
-    public interface AddNewSystemListener {
-        public void onSaveSystemButtonClicked(DialogFragment dialog);
+    public interface ConfirmDeleteListener {
+        public void onFragmentPositiveClick(DialogFragment dialog);
     }
 
-    AddNewSystem.AddNewSystemListener mListener;
+    ConfirmDeleteListener mListener;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View title = inflater.inflate(R.layout.dialog_add_new_system_title, null);
-        View content = inflater.inflate(R.layout.dialog_add_new_system, null);
+        View content = inflater.inflate(R.layout.dialog_confirm_delete, null);
 
-        builder.setCustomTitle(title);
         builder.setView(content)
-                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onSaveSystemButtonClicked(AddNewSystem.this);
+                        mListener.onFragmentPositiveClick(ConfirmDeleteDialog.this);
                     }
                 })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -55,10 +53,10 @@ public class AddNewSystem extends DialogFragment{
 
         Activity activity = getActivity();
         try {
-            mListener = (AddNewSystem.AddNewSystemListener) activity;
+            mListener = (ConfirmDeleteListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement AddNewSystemListener");
+                    + " must implement ConfirmDeleteListener");
         }
     }
 }

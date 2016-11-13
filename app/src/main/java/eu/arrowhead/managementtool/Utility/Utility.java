@@ -28,7 +28,7 @@ import java.util.List;
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.activities.ArrowheadServices;
 import eu.arrowhead.managementtool.activities.ArrowheadSystems;
-import eu.arrowhead.managementtool.fragments.ServerError;
+import eu.arrowhead.managementtool.fragments.ServerErrorDialog;
 import eu.arrowhead.managementtool.model.ErrorMessage;
 
 
@@ -82,16 +82,16 @@ public final class Utility {
 
     public static void showServerErrorFragment(VolleyError error, AppCompatActivity context){
         NetworkResponse response = error.networkResponse;
-        if (response != null) { //error instanceof ServerError condition too?
+        if (response != null) { //error instanceof ServerErrorDialog condition too?
             try {
                 String serverResponse = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                 ErrorMessage errorMessage = fromJsonObject(serverResponse, ErrorMessage.class);
-                DialogFragment newFragment = new ServerError();
+                DialogFragment newFragment = new ServerErrorDialog();
                 Bundle args = new Bundle();
                 args.putInt("status_code", errorMessage.getErrorCode());
                 args.putString("error_message", errorMessage.getErrorMessage());
                 newFragment.setArguments(args);
-                newFragment.show(context.getSupportFragmentManager(), ServerError.TAG);
+                newFragment.show(context.getSupportFragmentManager(), ServerErrorDialog.TAG);
             } catch (UnsupportedEncodingException e) {
                 // Couldn't properly decode data to string
                 Toast.makeText(context, R.string.server_side_error, Toast.LENGTH_LONG).show();
