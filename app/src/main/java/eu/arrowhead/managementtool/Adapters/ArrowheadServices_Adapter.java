@@ -27,6 +27,7 @@ public class ArrowheadServices_Adapter extends RecyclerView.Adapter<ArrowheadSer
 
     public void setServiceList(List<ArrowheadService> serviceList){
         this.serviceList = serviceList;
+        notifyDataSetChanged();
     }
 
     @Override

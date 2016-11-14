@@ -49,4 +49,5 @@
     <string name="nav_arrowhead_systems">Arrowhead Systems</string>
     <string name="nav_arrowhead_services">Arrowhead Services</string>
     <string name="title_activity_arrowhead_systems__detail">System Details</string>
+    <string name="action_search">Search</string>
 </resources>

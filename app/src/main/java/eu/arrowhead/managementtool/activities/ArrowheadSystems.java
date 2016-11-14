@@ -5,12 +5,14 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,7 +40,8 @@ import eu.arrowhead.managementtool.volley.Networking;
 public class ArrowheadSystems extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         SwipeRefreshLayout.OnRefreshListener,
-        AddNewSystemDialog.AddNewSystemListener{
+        AddNewSystemDialog.AddNewSystemListener,
+        SearchView.OnQueryTextListener{
 
     private DrawerLayout drawer;
     private RecyclerView mRecyclerView;
@@ -99,7 +102,6 @@ public class ArrowheadSystems extends AppCompatActivity implements
                             }
                             else{
                                 mAdapter.setSystemList(systemList);
-                                mAdapter.notifyDataSetChanged();
                             }
 
                             if(systemList.size() > 0 && switcher.getDisplayedChild() == 1){
@@ -180,6 +182,24 @@ public class ArrowheadSystems extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.arrowhead_systems, menu);
+
+        final MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(this);
+
+        MenuItemCompat.setOnActionExpandListener(item,
+                new MenuItemCompat.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        mAdapter.setSystemList(systemList);
+                        return true; // Return true to collapse action view
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        return true; // Return true to expand action view
+                    }
+                });
         return true;
     }
 
@@ -195,7 +215,32 @@ public class ArrowheadSystems extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        final List<ArrowheadSystem> filteredModelList = filterList(systemList, newText);
+        mAdapter.setSystemList(filteredModelList);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    private List<ArrowheadSystem> filterList(List<ArrowheadSystem> systems, String query) {
+        query = query.toLowerCase();
+
+        final List<ArrowheadSystem> filteredSystemList = new ArrayList<>();
+        for (ArrowheadSystem system : systems) {
+            final String systemGroup = system.getSystemGroup().toLowerCase();
+            final String systemName = system.getSystemName().toLowerCase();
+            if (systemGroup.contains(query) ||systemName.contains(query)) {
+                filteredSystemList.add(system);
+            }
+        }
+        return filteredSystemList;
+    }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         drawer.closeDrawer(GravityCompat.START);

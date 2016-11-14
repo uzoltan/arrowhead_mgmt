@@ -27,6 +27,7 @@ public class ArrowheadSystems_Adapter extends RecyclerView.Adapter<ArrowheadSyst
 
     public void setSystemList(List<ArrowheadSystem> systemList){
         this.systemList = systemList;
+        notifyDataSetChanged();
     }
 
     @Override
