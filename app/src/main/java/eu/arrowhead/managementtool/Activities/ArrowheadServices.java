@@ -238,7 +238,7 @@ public class ArrowheadServices extends AppCompatActivity implements
         for (ArrowheadService service : services) {
             final String serviceGroup = service.getServiceGroup().toLowerCase();
             final String serviceDef = service.getServiceDefinition().toLowerCase();
-            if (serviceGroup.contains(query) ||serviceDef.contains(query)) {
+            if (serviceGroup.contains(query) || serviceDef.contains(query)) {
                 filteredServiceList.add(service);
             }
         }

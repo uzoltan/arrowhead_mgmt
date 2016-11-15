@@ -1,5 +1,7 @@
 package eu.arrowhead.managementtool.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -14,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -24,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,16 +36,19 @@ import java.util.List;
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.adapters.ArrowheadSystems_Adapter;
 import eu.arrowhead.managementtool.fragments.AddNewSystemDialog;
+import eu.arrowhead.managementtool.fragments.QRCodeScannerDialog;
 import eu.arrowhead.managementtool.model.ArrowheadSystem;
 import eu.arrowhead.managementtool.utility.Utility;
 import eu.arrowhead.managementtool.volley.JsonArrayRequest;
+import eu.arrowhead.managementtool.volley.JsonObjectRequest;
 import eu.arrowhead.managementtool.volley.Networking;
 
 public class ArrowheadSystems extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         SwipeRefreshLayout.OnRefreshListener,
         AddNewSystemDialog.AddNewSystemListener,
-        SearchView.OnQueryTextListener{
+        QRCodeScannerDialog.QRCodeScannerListener,
+        SearchView.OnQueryTextListener {
 
     private DrawerLayout drawer;
     private RecyclerView mRecyclerView;
@@ -53,6 +60,7 @@ public class ArrowheadSystems extends AppCompatActivity implements
 
     //TODO replace hardwired url with proper solution
     private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/systems";
+    private static final int SCAN_QR_CODE_REQUEST = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,42 +95,43 @@ public class ArrowheadSystems extends AppCompatActivity implements
         super.onResume();
     }
 
-    public void sendGetAllRequest(){
+    public void sendGetAllRequest() {
         final ViewSwitcher switcher = (ViewSwitcher) findViewById(R.id.system_list_switcher);
         if (Utility.isConnected(this)) {
             JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
                     new Response.Listener<JSONArray>() {
 
                         @Override
-                        public void onResponse(JSONArray response){
+                        public void onResponse(JSONArray response) {
                             systemList = Utility.fromJsonArray(response.toString(), ArrowheadSystem.class);
-                            if(mAdapter == null){
+                            if (mAdapter == null) {
                                 mAdapter = new ArrowheadSystems_Adapter(systemList);
                                 mRecyclerView.setAdapter(mAdapter);
-                            }
-                            else{
+                            } else {
                                 mAdapter.setSystemList(systemList);
                             }
 
-                            if(systemList.size() > 0 && switcher.getDisplayedChild() == 1){
+                            if (systemList.size() > 0 && switcher.getDisplayedChild() == 1) {
                                 //if the empty view is displayed at the moment, switch to the recyclerview
                                 switcher.showPrevious();
                             }
-                            if(switcher.getDisplayedChild() == 0 && systemList.size() == 0){
+                            if (switcher.getDisplayedChild() == 0 && systemList.size() == 0) {
                                 //if the recyclerview is displayed at the moment, switch to the empty view
                                 switcher.showNext();
                             }
-                        }},
+                        }
+                    },
                     new Response.ErrorListener() {
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            if(switcher.getDisplayedChild() == 0 && systemList.size() == 0){
+                            if (switcher.getDisplayedChild() == 0 && systemList.size() == 0) {
                                 //if the recyclerview is displayed at the moment, switch to the empty view
                                 switcher.showNext();
                             }
                             Utility.showServerErrorFragment(error, ArrowheadSystems.this);
-                        }}
+                        }
+                    }
             );
 
             Networking.getInstance(this).addToRequestQueue(jsArrayRequest);
@@ -171,15 +180,6 @@ public class ArrowheadSystems extends AppCompatActivity implements
     }
 
     @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.arrowhead_systems, menu);
 
@@ -212,13 +212,84 @@ public class ArrowheadSystems extends AppCompatActivity implements
             newFragment.show(getSupportFragmentManager(), AddNewSystemDialog.TAG);
         }
 
+        if (id == R.id.action_scan_qr_code) {
+            try {
+                Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // "PRODUCT_MODE for bar codes
+                startActivityForResult(intent, SCAN_QR_CODE_REQUEST);
+            } catch (Exception e) {
+                DialogFragment newFragment = new QRCodeScannerDialog();
+                newFragment.show(getSupportFragmentManager(), QRCodeScannerDialog.TAG);
+            }
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentPositiveClick(DialogFragment dialog) {
+        Uri marketUri = Uri.parse("market://details?id=com.google.zxing.client.android");
+        Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+        startActivity(marketIntent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                String contents = data.getStringExtra("SCAN_RESULT");
+                Log.i("qr_code", contents);
+
+                String[] system = contents.split(";");
+                String systemGroup = system[0];
+                String systemName = system[1];
+                sendGetRequest(systemGroup, systemName);
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //handle cancel
+            }
+        }
+    }
+
+    public void sendGetRequest(String systemGroup, String systemName){
+        String systemURL = URL + "/systemgroup/" + systemGroup + "/systemname/" + systemName;
+        if (Utility.isConnected(this)) {
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, systemURL, null,
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            ArrowheadSystem system = Utility.fromJsonObject(response.toString(), ArrowheadSystem.class);
+                            Intent intent = new Intent(ArrowheadSystems.this, ArrowheadSystem_Detail.class);
+                            intent.putExtra("arrowhead_system", system);
+                            startActivity(intent);
+                        }
+                    },
+                    new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Utility.showServerErrorFragment(error, ArrowheadSystems.this);
+                        }
+                    }
+            );
+
+            Networking.getInstance(this).addToRequestQueue(jsObjRequest);
+        } else {
+            Utility.showNoConnectionSnackbar(drawer);
+        }
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
         final List<ArrowheadSystem> filteredModelList = filterList(systemList, newText);
-        mAdapter.setSystemList(filteredModelList);
+        if (mAdapter == null) {
+            mAdapter = new ArrowheadSystems_Adapter(filteredModelList);
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.setSystemList(filteredModelList);
+        }
         return true;
     }
 
@@ -234,7 +305,7 @@ public class ArrowheadSystems extends AppCompatActivity implements
         for (ArrowheadSystem system : systems) {
             final String systemGroup = system.getSystemGroup().toLowerCase();
             final String systemName = system.getSystemName().toLowerCase();
-            if (systemGroup.contains(query) ||systemName.contains(query)) {
+            if (systemGroup.contains(query) || systemName.contains(query)) {
                 filteredSystemList.add(system);
             }
         }
@@ -245,6 +316,15 @@ public class ArrowheadSystems extends AppCompatActivity implements
     public boolean onNavigationItemSelected(MenuItem item) {
         drawer.closeDrawer(GravityCompat.START);
         return Utility.handleNavigationItemClick(item, ArrowheadSystems.this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

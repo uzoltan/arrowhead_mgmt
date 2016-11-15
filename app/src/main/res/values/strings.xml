@@ -50,4 +50,9 @@
     <string name="nav_arrowhead_services">Arrowhead Services</string>
     <string name="title_activity_arrowhead_systems__detail">System Details</string>
     <string name="action_search">Search</string>
+    <string name="action_scan_qr_code">Scan QR Code</string>
+    <string name="qr_code_scanner_dialog_title">QR Code Scanner</string>
+    <string name="qr_code_scanner_text">This feature of the Management Tool scans QR codes which can identify an ArrowheadSystem. If a scan is successful, the details of the scanned system will be shown.\nFor this feature, the Management Tool uses a lightweight 3rd party app, which does the actual QR code scanning. You can download it now to use this feature of the Management Tool.</string>
+    <string name="take_me_there">Take me there</string>
+    <string name="no_thanks">No, thanks</string>
 </resources>
