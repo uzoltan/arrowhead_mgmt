@@ -41,7 +41,7 @@ public class ArrowheadService_Interfaces_Adapter extends RecyclerView.Adapter<Ar
 
         TextView vInterface;
 
-        public InterfaceViewHolder(View v){
+        InterfaceViewHolder(View v){
             super(v);
             vInterface = (TextView) v.findViewById(R.id.interface_name);
         }

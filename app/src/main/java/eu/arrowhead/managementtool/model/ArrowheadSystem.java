@@ -67,6 +67,35 @@ public class ArrowheadSystem implements Serializable {
 	public String toString(){
 		return "(" + systemGroup + ":" + systemName + ")";
 	}
-	
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof ArrowheadSystem))
+			return false;
+		ArrowheadSystem other = (ArrowheadSystem) obj;
+		if (systemGroup == null) {
+			if (other.systemGroup != null)
+				return false;
+		} else if (!systemGroup.equals(other.systemGroup))
+			return false;
+		if (systemName == null) {
+			if (other.systemName != null)
+				return false;
+		} else if (!systemName.equals(other.systemName))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((systemGroup == null) ? 0 : systemGroup.hashCode());
+		result = prime * result + ((systemName == null) ? 0 : systemName.hashCode());
+		return result;
+	}
 }

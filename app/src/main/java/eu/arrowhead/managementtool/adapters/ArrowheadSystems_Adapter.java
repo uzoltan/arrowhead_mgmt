@@ -64,7 +64,7 @@ public class ArrowheadSystems_Adapter extends RecyclerView.Adapter<ArrowheadSyst
         TextView vSystemName;
         TextView vSystemGroup;
 
-        public SystemViewHolder(View v){
+        SystemViewHolder(View v){
             super(v);
             vCardView = (CardView) v.findViewById(R.id.system_card_view);
             vSystemName = (TextView) v.findViewById(R.id.system_name);

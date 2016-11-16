@@ -42,13 +42,20 @@ public class ArrowheadSystem_Detail extends AppCompatActivity {
 
         Bundle args = new Bundle();
         args.putSerializable("arrowhead_system", system);
+
         SystemDetails systemDetails = new SystemDetails();
         systemDetails.setArguments(args);
+        SystemAuthRights systemAuthRights = new SystemAuthRights();
+        systemAuthRights.setArguments(args);
+        SystemDefaultConfig systemDefaultConfig = new SystemDefaultConfig();
+        systemDefaultConfig.setArguments(args);
+        SystemStoreEntries systemStoreEntries = new SystemStoreEntries();
+        systemStoreEntries.setArguments(args);
 
         adapter.addFragment(systemDetails, "General");
-        adapter.addFragment(new SystemAuthRights(), "Auth Rights");
-        adapter.addFragment(new SystemDefaultConfig(), "Default Config");
-        adapter.addFragment(new SystemStoreEntries(), "Store Based");
+        adapter.addFragment(systemAuthRights, "Auth Rights");
+        adapter.addFragment(systemDefaultConfig, "Default Config");
+        adapter.addFragment(systemStoreEntries, "Store Based");
         viewPager.setAdapter(adapter);
     }
 

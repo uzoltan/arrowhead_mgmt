@@ -64,7 +64,7 @@ public class ArrowheadServices_Adapter extends RecyclerView.Adapter<ArrowheadSer
         TextView vServiceName;
         TextView vServiceGroup;
 
-        public ServiceViewHolder(View v){
+        ServiceViewHolder(View v){
             super(v);
             vCardView = (CardView) v.findViewById(R.id.service_card_view);
             vServiceName = (TextView) v.findViewById(R.id.service_name);

@@ -80,6 +80,10 @@ public final class Utility {
         sb.show();
     }
 
+    public static void showNoConnectionToast(Context context){
+        Toast.makeText(context, R.string.no_connection, Toast.LENGTH_LONG).show();
+    }
+
     public static void showServerErrorFragment(VolleyError error, AppCompatActivity context){
         NetworkResponse response = error.networkResponse;
         if (response != null) { //error instanceof ServerErrorDialog condition too?

@@ -47,7 +47,6 @@ public class ArrowheadServices extends AppCompatActivity implements
     private DrawerLayout drawer;
     private RecyclerView mRecyclerView;
     private ArrowheadServices_Adapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
     private SwipeRefreshLayout srl;
 
     private List<ArrowheadService> serviceList = new ArrayList<>();
@@ -75,8 +74,7 @@ public class ArrowheadServices extends AppCompatActivity implements
         //recyclerview setup
         mRecyclerView = (RecyclerView) findViewById(R.id.service_list);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         srl = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_service_list);
         srl.setOnRefreshListener(this);
     }

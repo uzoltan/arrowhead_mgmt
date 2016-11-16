@@ -16,7 +16,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -53,7 +52,6 @@ public class ArrowheadSystems extends AppCompatActivity implements
     private DrawerLayout drawer;
     private RecyclerView mRecyclerView;
     private ArrowheadSystems_Adapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
     private SwipeRefreshLayout srl;
 
     private List<ArrowheadSystem> systemList = new ArrayList<>();
@@ -82,8 +80,7 @@ public class ArrowheadSystems extends AppCompatActivity implements
         //recyclerview setup
         mRecyclerView = (RecyclerView) findViewById(R.id.system_list);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         srl = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_system_list);
         srl.setOnRefreshListener(this);
     }
@@ -239,8 +236,6 @@ public class ArrowheadSystems extends AppCompatActivity implements
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String contents = data.getStringExtra("SCAN_RESULT");
-                Log.i("qr_code", contents);
-
                 String[] system = contents.split(";");
                 String systemGroup = system[0];
                 String systemName = system[1];

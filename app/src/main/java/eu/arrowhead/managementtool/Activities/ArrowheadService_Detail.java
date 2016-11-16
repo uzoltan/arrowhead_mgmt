@@ -52,7 +52,6 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
     private ViewSwitcher sgSwitcher, sdSwitcher, interfaceSwitcher;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     //TODO replace hardwired url with proper solution
     private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/services";
@@ -85,8 +84,7 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
 
         //recyclerview setup
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
                 DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
