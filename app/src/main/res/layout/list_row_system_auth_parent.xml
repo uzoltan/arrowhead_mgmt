@@ -5,13 +5,13 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/system_name"
+        android:id="@+id/service_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/system_group"
+        android:id="@+id/service_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp" />
