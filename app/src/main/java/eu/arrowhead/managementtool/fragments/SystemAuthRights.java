@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +35,10 @@ import eu.arrowhead.managementtool.volley.Networking;
 public class SystemAuthRights extends Fragment {
 
     private ArrowheadSystem system;
-    private List<IntraCloudAuthorization> authList = new ArrayList<>();
-    private List<IntraCloudAuthorization> filteredAuthList = new ArrayList<>();
-    private List<SystemAuth_ListEntry> groupedAuthList = new ArrayList<>();
 
     private ViewSwitcher switcher;
     private RecyclerView mRecyclerView;
+    private ArrowheadSystem_AuthAdapter mAdapter;
 
     //TODO hardwired URL
     private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/auth/intracloud";
@@ -57,18 +54,19 @@ public class SystemAuthRights extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_system_auth_rights, container, false);
         switcher = (ViewSwitcher) layout.findViewById(R.id.intra_auth_list_switcher);
         mRecyclerView = (RecyclerView) layout.findViewById(R.id.intra_auth_list);
 
-        if (Utility.isConnected(getContext())) {
+        if (Utility.isConnected(getActivity())) {
             JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
                     new Response.Listener<JSONArray>() {
 
                         @Override
                         public void onResponse(JSONArray response) {
-                            authList = Utility.fromJsonArray(response.toString(), IntraCloudAuthorization.class);
+                            List<IntraCloudAuthorization> authList = Utility.fromJsonArray(response.toString(), IntraCloudAuthorization.class);
+                            List<IntraCloudAuthorization> filteredAuthList = new ArrayList<>();
                             for(IntraCloudAuthorization authEntry : authList){
                                 if(authEntry.getConsumer().equals(system)){
                                     filteredAuthList.add(authEntry);
@@ -80,31 +78,33 @@ public class SystemAuthRights extends Fragment {
                                 serviceList.add(authEntry.getService());
                             }
 
-                            List<ArrowheadSystem> providers = new ArrayList<>();
+                            List<SystemAuth_ListEntry> groupedAuthList = new ArrayList<>();
                             for(ArrowheadService service : serviceList){
+                                List<ArrowheadSystem> providers = new ArrayList<>();
                                 for(IntraCloudAuthorization authEntry : filteredAuthList){
                                     if(service.equals(authEntry.getService())){
                                         providers.add(authEntry.getProvider());
                                     }
                                 }
                                 groupedAuthList.add(new SystemAuth_ListEntry(service.getServiceGroup(), service.getServiceDefinition(), providers));
-                                providers.clear();
                             }
-                            Log.i("recview", String.valueOf(groupedAuthList.size()));
-                            Log.i("recview", String.valueOf(groupedAuthList.get(0).getChildItemList().size()));
+
                             if(!groupedAuthList.isEmpty()){
+                                if(switcher.getDisplayedChild() == 1){
+                                    switcher.showPrevious();
+                                }
                                 mRecyclerView.setHasFixedSize(true);
-                                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                                 DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
                                         DividerItemDecoration.VERTICAL);
                                 mRecyclerView.addItemDecoration(dividerItemDecoration);
-                                ArrowheadSystem_AuthAdapter mAdapter = new ArrowheadSystem_AuthAdapter(getContext(), groupedAuthList);
+                                mAdapter = new ArrowheadSystem_AuthAdapter(getActivity(), groupedAuthList);
+                                mAdapter.onRestoreInstanceState(savedInstanceState);
                                 mRecyclerView.setAdapter(mAdapter);
-                                groupedAuthList.clear();
-                                Log.i("recview", "CODE REACHED THIS");
                             } else{
-                                switcher.showNext();
-                                Log.i("textview", "CODE REACHED THIS");
+                                if(switcher.getDisplayedChild() == 0){
+                                    switcher.showNext();
+                                }
                             }
                         }
                     },
@@ -117,12 +117,17 @@ public class SystemAuthRights extends Fragment {
                     }
             );
 
-            Networking.getInstance(getContext()).addToRequestQueue(jsArrayRequest);
+            Networking.getInstance(getActivity()).addToRequestQueue(jsArrayRequest);
         } else {
-            Utility.showNoConnectionToast(getContext());
+            Utility.showNoConnectionToast(getActivity());
         }
 
         return layout;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        mAdapter.onSaveInstanceState(savedInstanceState);
+    }
 }
