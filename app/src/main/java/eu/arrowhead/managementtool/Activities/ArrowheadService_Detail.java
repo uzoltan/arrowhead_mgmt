@@ -53,7 +53,6 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
 
-    //TODO replace hardwired url with proper solution
     private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/services";
 
     @Override

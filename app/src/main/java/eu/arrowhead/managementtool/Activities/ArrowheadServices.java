@@ -50,9 +50,6 @@ public class ArrowheadServices extends AppCompatActivity implements
     private SwipeRefreshLayout srl;
 
     private List<ArrowheadService> serviceList = new ArrayList<>();
-
-    //TODO replace hardwired url with proper solution
-    //TODO recview searchbar!
     private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/services";
 
     @Override

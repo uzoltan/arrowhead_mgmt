@@ -7,7 +7,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="no_connection">No internet connection!</string>
-    <string name="no_data_available">No data available…</string>
+    <string name="no_data_available">No entry</string>
     <string name="title_activity_arrowhead_service__detail">Service details</string>
     <string name="service_group_label">Service group:</string>
     <string name="service_definition_label">Service definition:</string>
@@ -55,4 +55,11 @@
     <string name="qr_code_scanner_text">This feature of the Management Tool scans QR codes which can identify an ArrowheadSystem. If a scan is successful, the details of the scanned system will be shown.\nFor this feature, the Management Tool uses a lightweight 3rd party app, which does the actual QR code scanning. You can download it now to use this feature of the Management Tool.</string>
     <string name="take_me_there">Take me there</string>
     <string name="no_thanks">No, thanks</string>
+    <string name="consumer_auth_rights_text">System can consume:</string>
+    <string name="provider_auth_rights_text">System can provide:</string>
+    <string name="consumer_default_configs_text">Consumer Side Default Configurations</string>
+    <string name="provider_default_configs_text">Provider Side Default Configurations</string>
+    <string name="priority">Priority:</string>
+    <string name="consumer_store_based_text">Consumer Side Store Entries</string>
+    <string name="provider_store_based_text">Provider Side Store Entries</string>
 </resources>

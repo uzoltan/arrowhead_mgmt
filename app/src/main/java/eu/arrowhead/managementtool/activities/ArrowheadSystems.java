@@ -56,7 +56,7 @@ public class ArrowheadSystems extends AppCompatActivity implements
 
     private List<ArrowheadSystem> systemList = new ArrayList<>();
 
-    //TODO replace hardwired url with proper solution
+    //TODO replace hardwired url with proper solution in the whole project
     private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/systems";
     private static final int SCAN_QR_CODE_REQUEST = 0;
 

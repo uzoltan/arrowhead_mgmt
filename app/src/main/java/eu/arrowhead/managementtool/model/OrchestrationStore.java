@@ -15,6 +15,9 @@ public class OrchestrationStore{
 	private Date lastUpdated;
 	private String orchestrationRule;
 
+    //Need this boolean to decide which System details (consumer or provider) I show in the store based list child views.
+    private boolean isConsumerSide;
+
 	public OrchestrationStore(){
 	}
 	
@@ -113,5 +116,11 @@ public class OrchestrationStore{
 		this.orchestrationRule = orchestrationRule;
 	}
 
-	
+    public boolean isConsumerSide() {
+        return isConsumerSide;
+    }
+
+    public void setConsumerSide(boolean consumerSide) {
+        isConsumerSide = consumerSide;
+    }
 }

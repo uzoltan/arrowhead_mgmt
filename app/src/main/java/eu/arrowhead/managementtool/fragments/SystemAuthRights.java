@@ -36,11 +36,10 @@ public class SystemAuthRights extends Fragment {
 
     private ArrowheadSystem system;
 
-    private ViewSwitcher switcher;
-    private RecyclerView mRecyclerView;
-    private ArrowheadSystem_AuthAdapter mAdapter;
+    private ViewSwitcher consumerSwitcher, providerSwitcher;
+    private RecyclerView consumerRecView, providerRecView;
+    private ArrowheadSystem_AuthAdapter consumerAdapter, providerAdapter;
 
-    //TODO hardwired URL
     private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/auth/intracloud";
 
     public SystemAuthRights() {
@@ -56,8 +55,10 @@ public class SystemAuthRights extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_system_auth_rights, container, false);
-        switcher = (ViewSwitcher) layout.findViewById(R.id.intra_auth_list_switcher);
-        mRecyclerView = (RecyclerView) layout.findViewById(R.id.intra_auth_list);
+        consumerSwitcher = (ViewSwitcher) layout.findViewById(R.id.consumer_intra_auth_list_switcher);
+        providerSwitcher = (ViewSwitcher) layout.findViewById(R.id.provider_intra_auth_list_switcher);
+        consumerRecView = (RecyclerView) layout.findViewById(R.id.consumer_intra_auth_list);
+        providerRecView = (RecyclerView) layout.findViewById(R.id.provider_intra_auth_list);
 
         if (Utility.isConnected(getActivity())) {
             JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
@@ -66,44 +67,81 @@ public class SystemAuthRights extends Fragment {
                         @Override
                         public void onResponse(JSONArray response) {
                             List<IntraCloudAuthorization> authList = Utility.fromJsonArray(response.toString(), IntraCloudAuthorization.class);
-                            List<IntraCloudAuthorization> filteredAuthList = new ArrayList<>();
+                            List<IntraCloudAuthorization> filteredConsumerAuthList = new ArrayList<>();
+                            List<IntraCloudAuthorization> filteredProviderAuthList = new ArrayList<>();
                             for(IntraCloudAuthorization authEntry : authList){
                                 if(authEntry.getConsumer().equals(system)){
-                                    filteredAuthList.add(authEntry);
+                                    filteredConsumerAuthList.add(authEntry);
+                                }
+                                if(authEntry.getProvider().equals(system)){
+                                    filteredProviderAuthList.add(authEntry);
                                 }
                             }
                             //A Set will not contain duplicates
-                            HashSet<ArrowheadService> serviceList = new HashSet<>();
-                            for(IntraCloudAuthorization authEntry : filteredAuthList){
-                                serviceList.add(authEntry.getService());
+                            HashSet<ArrowheadService> consumerServiceList = new HashSet<>();
+                            HashSet<ArrowheadService> providerServiceList = new HashSet<>();
+                            for(IntraCloudAuthorization authEntry : filteredConsumerAuthList){
+                                consumerServiceList.add(authEntry.getService());
+                            }
+                            for(IntraCloudAuthorization authEntry : filteredProviderAuthList){
+                                providerServiceList.add(authEntry.getService());
                             }
 
-                            List<SystemAuth_ListEntry> groupedAuthList = new ArrayList<>();
-                            for(ArrowheadService service : serviceList){
+                            List<SystemAuth_ListEntry> groupedConsumerAuthList = new ArrayList<>();
+                            for(ArrowheadService service : consumerServiceList){
                                 List<ArrowheadSystem> providers = new ArrayList<>();
-                                for(IntraCloudAuthorization authEntry : filteredAuthList){
+                                for(IntraCloudAuthorization authEntry : filteredConsumerAuthList){
                                     if(service.equals(authEntry.getService())){
                                         providers.add(authEntry.getProvider());
                                     }
                                 }
-                                groupedAuthList.add(new SystemAuth_ListEntry(service.getServiceGroup(), service.getServiceDefinition(), providers));
+                                groupedConsumerAuthList.add(new SystemAuth_ListEntry(service.getServiceGroup(), service.getServiceDefinition(), providers));
                             }
 
-                            if(!groupedAuthList.isEmpty()){
-                                if(switcher.getDisplayedChild() == 1){
-                                    switcher.showPrevious();
+                            List<SystemAuth_ListEntry> groupedProviderAuthList = new ArrayList<>();
+                            for(ArrowheadService service : providerServiceList){
+                                List<ArrowheadSystem> consumers = new ArrayList<>();
+                                for(IntraCloudAuthorization authEntry : filteredProviderAuthList){
+                                    if(service.equals(authEntry.getService())){
+                                        consumers.add(authEntry.getConsumer());
+                                    }
                                 }
-                                mRecyclerView.setHasFixedSize(true);
-                                mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
+                                groupedProviderAuthList.add(new SystemAuth_ListEntry(service.getServiceGroup(), service.getServiceDefinition(), consumers));
+                            }
+
+                            if(!groupedConsumerAuthList.isEmpty()){
+                                if(consumerSwitcher.getDisplayedChild() == 1){
+                                    consumerSwitcher.showPrevious();
+                                }
+                                consumerRecView.setHasFixedSize(true);
+                                consumerRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(consumerRecView.getContext(),
                                         DividerItemDecoration.VERTICAL);
-                                mRecyclerView.addItemDecoration(dividerItemDecoration);
-                                mAdapter = new ArrowheadSystem_AuthAdapter(getActivity(), groupedAuthList);
-                                mAdapter.onRestoreInstanceState(savedInstanceState);
-                                mRecyclerView.setAdapter(mAdapter);
+                                consumerRecView.addItemDecoration(dividerItemDecoration);
+                                consumerAdapter = new ArrowheadSystem_AuthAdapter(getActivity(), groupedConsumerAuthList);
+                                consumerAdapter.onRestoreInstanceState(savedInstanceState);
+                                consumerRecView.setAdapter(consumerAdapter);
                             } else{
-                                if(switcher.getDisplayedChild() == 0){
-                                    switcher.showNext();
+                                if(consumerSwitcher.getDisplayedChild() == 0){
+                                    consumerSwitcher.showNext();
+                                }
+                            }
+
+                            if(!groupedProviderAuthList.isEmpty()){
+                                if(providerSwitcher.getDisplayedChild() == 1){
+                                    providerSwitcher.showPrevious();
+                                }
+                                providerRecView.setHasFixedSize(true);
+                                providerRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(providerRecView.getContext(),
+                                        DividerItemDecoration.VERTICAL);
+                                providerRecView.addItemDecoration(dividerItemDecoration);
+                                providerAdapter = new ArrowheadSystem_AuthAdapter(getActivity(), groupedProviderAuthList);
+                                providerAdapter.onRestoreInstanceState(savedInstanceState);
+                                providerRecView.setAdapter(providerAdapter);
+                            } else{
+                                if(providerSwitcher.getDisplayedChild() == 0){
+                                    providerSwitcher.showNext();
                                 }
                             }
                         }
@@ -113,6 +151,12 @@ public class SystemAuthRights extends Fragment {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Utility.showServerErrorFragment(error, (AppCompatActivity) getActivity());
+                            if(consumerSwitcher.getDisplayedChild() == 0){
+                                consumerSwitcher.showNext();
+                            }
+                            if(providerSwitcher.getDisplayedChild() == 0){
+                                providerSwitcher.showNext();
+                            }
                         }
                     }
             );
@@ -120,6 +164,12 @@ public class SystemAuthRights extends Fragment {
             Networking.getInstance(getActivity()).addToRequestQueue(jsArrayRequest);
         } else {
             Utility.showNoConnectionToast(getActivity());
+            if(consumerSwitcher.getDisplayedChild() == 0){
+                consumerSwitcher.showNext();
+            }
+            if(providerSwitcher.getDisplayedChild() == 0){
+                providerSwitcher.showNext();
+            }
         }
 
         return layout;
@@ -128,6 +178,11 @@ public class SystemAuthRights extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        mAdapter.onSaveInstanceState(savedInstanceState);
+        if(consumerAdapter != null){
+            consumerAdapter.onSaveInstanceState(savedInstanceState);
+        }
+        if(providerAdapter != null){
+            providerAdapter.onSaveInstanceState(savedInstanceState);
+        }
     }
 }
