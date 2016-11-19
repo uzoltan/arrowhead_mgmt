@@ -62,4 +62,7 @@
     <string name="priority">Priority:</string>
     <string name="consumer_store_based_text">Consumer Side Store Entries</string>
     <string name="provider_store_based_text">Provider Side Store Entries</string>
+    <string name="arrowhead_logo">Arrowhead Logo</string>
+    <string name="system_update_succcess">System update is successful.</string>
+    <string name="system_update_request">System update request has been sent…</string>
 </resources>

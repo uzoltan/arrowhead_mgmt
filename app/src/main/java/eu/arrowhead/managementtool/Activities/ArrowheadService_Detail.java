@@ -191,7 +191,6 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
         } else {
             Utility.showNoConnectionSnackbar(rootView);
         }
-
     }
 
     public void sendPostRequest(final ArrowheadService service) {

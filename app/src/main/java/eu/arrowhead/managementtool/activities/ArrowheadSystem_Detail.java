@@ -3,21 +3,29 @@ package eu.arrowhead.managementtool.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ViewSwitcher;
+
+import java.util.List;
 
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.adapters.ArrowheadSystem_ViewPageAdapter;
+import eu.arrowhead.managementtool.fragments.ConfirmDeleteDialog;
 import eu.arrowhead.managementtool.fragments.SystemAuthRights;
 import eu.arrowhead.managementtool.fragments.SystemDefaultConfig;
 import eu.arrowhead.managementtool.fragments.SystemDetails;
 import eu.arrowhead.managementtool.fragments.SystemStoreEntries;
 import eu.arrowhead.managementtool.model.ArrowheadSystem;
 
-public class ArrowheadSystem_Detail extends AppCompatActivity {
+public class ArrowheadSystem_Detail extends AppCompatActivity implements
+        ConfirmDeleteDialog.ConfirmDeleteListener {
 
     private ArrowheadSystem system;
+
+    private SystemDetails systemDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +51,7 @@ public class ArrowheadSystem_Detail extends AppCompatActivity {
         Bundle args = new Bundle();
         args.putSerializable("arrowhead_system", system);
 
-        SystemDetails systemDetails = new SystemDetails();
+        systemDetails = new SystemDetails();
         systemDetails.setArguments(args);
         SystemAuthRights systemAuthRights = new SystemAuthRights();
         systemAuthRights.setArguments(args);
@@ -59,4 +67,22 @@ public class ArrowheadSystem_Detail extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    @Override
+    public void onBackPressed() {
+        List<ViewSwitcher> switcherList = systemDetails.getViewSwitchers();
+        //Check if the system is being edited right now. (Could use any of the view switchers to check.)
+        if (switcherList.get(0).getDisplayedChild() == 1) {
+            for(ViewSwitcher switcher : switcherList){
+                switcher.showPrevious();
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onFragmentPositiveClick(DialogFragment dialog) {
+        ArrowheadSystem system = new ArrowheadSystem(systemDetails.systemGroupTv.getText().toString(), systemDetails.systemNameTv.getText().toString(), null, null, null);
+        systemDetails.sendDeleteRequest(system, false);
+    }
 }
