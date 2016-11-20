@@ -3,6 +3,7 @@ package eu.arrowhead.managementtool.model;
 
 public class IntraCloudAuthorization {
 
+	private int id;
 	private ArrowheadSystem consumer;
 	private ArrowheadSystem provider;
 	private ArrowheadService service;
@@ -17,7 +18,15 @@ public class IntraCloudAuthorization {
 		this.service = service;
 	}
 
-	public ArrowheadSystem getConsumer() {
+	public int getId() {
+		return id;
+	}
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public ArrowheadSystem getConsumer() {
 		return consumer;
 	}
 

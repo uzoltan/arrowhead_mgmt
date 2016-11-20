@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".activities.ArrowheadSystems"
             android:label="@string/app_name"
@@ -22,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.ArrowheadSystem_Detail"
             android:label="@string/title_activity_arrowhead_systems__detail"
@@ -31,11 +33,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="eu.arrowhead.managementtool.activities.ArrowheadSystems" />
         </activity>
+
         <activity
             android:name=".activities.ArrowheadServices"
             android:label="@string/title_activity_arrowhead_services"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activities.ArrowheadService_Detail"
             android:label="@string/title_activity_arrowhead_service__detail"
@@ -44,6 +48,39 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="eu.arrowhead.managementtool.activities.ArrowheadServices" />
+
+        </activity>
+
+        <activity
+            android:name=".activities.ArrowheadClouds"
+            android:label="@string/title_activity_arrowhead_clouds"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".activities.ArrowheadCloud_Detail"
+            android:label="@string/title_activity_arrowhead_cloud__detail"
+            android:parentActivityName=".activities.ArrowheadClouds"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="eu.arrowhead.managementtool.activities.ArrowheadClouds" />
+        </activity>
+
+        <activity
+            android:name=".activities.CoreSystems"
+            android:label="@string/title_activity_core_systems"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".activities.CoreSystem_Detail"
+            android:label="@string/title_activity_core_system__detail"
+            android:parentActivityName=".activities.CoreSystems"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="eu.arrowhead.managementtool.activities.CoreSystems" />
         </activity>
     </application>
 

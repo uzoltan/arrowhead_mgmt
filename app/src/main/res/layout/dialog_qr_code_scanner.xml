@@ -8,8 +8,8 @@
         android:id="@+id/qr_code_scanner_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
         android:text="@string/qr_code_scanner_text"
         android:textColor="@color/black"
         android:textSize="16sp" />

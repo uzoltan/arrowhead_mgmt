@@ -65,4 +65,18 @@
     <string name="arrowhead_logo">Arrowhead Logo</string>
     <string name="system_update_succcess">System update is successful.</string>
     <string name="system_update_request">System update request has been sent…</string>
+    <string name="nav_arrowhead_clouds">Arrowhead Clouds</string>
+    <string name="nav_core_config_title">Core Configuration</string>
+    <string name="nav_core_systems">Core Systems</string>
+    <string name="nav_neighborhood_clouds">Neighborhood Clouds</string>
+    <string name="nav_own_cloud">Own Cloud</string>
+    <string name="nav_intracloud_auth">Intracloud Authorizations</string>
+    <string name="intercloud_auth">Intercloud Authorizations</string>
+    <string name="nav_orch_store">Orchestration Store</string>
+    <string name="nav_service_registry">Service Registry</string>
+    <string name="title_activity_arrowhead_clouds">ArrowheadClouds</string>
+    <string name="title_activity_core_systems">CoreSystems</string>
+    <string name="title_activity_arrowhead_cloud__detail">ArrowheadCloud_Detail</string>
+    <string name="title_activity_core_system__detail">CoreSystem_Detail</string>
+    <string name="not_implemented_yet">Not implemented yet!</string>
 </resources>

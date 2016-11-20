@@ -242,8 +242,10 @@ public class ArrowheadServices extends AppCompatActivity implements
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        drawer.closeDrawer(GravityCompat.START);
-        return Utility.handleNavigationItemClick(item, ArrowheadServices.this);
+        if(Utility.handleNavigationItemClick(item, ArrowheadServices.this)){
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        return true;
     }
 
     @Override

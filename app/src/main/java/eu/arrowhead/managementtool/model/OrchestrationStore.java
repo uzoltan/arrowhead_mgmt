@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class OrchestrationStore{
 
+	private int id;
 	private ArrowheadSystem consumer;
 	private ArrowheadService service;
 	private ArrowheadSystem providerSystem;
@@ -42,6 +43,14 @@ public class OrchestrationStore{
 		this.name = name;
 		this.lastUpdated = lastUpdated;
 		this.orchestrationRule = orchestrationRule;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public ArrowheadSystem getConsumer() {

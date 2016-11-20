@@ -27,8 +27,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import eu.arrowhead.managementtool.R;
+import eu.arrowhead.managementtool.activities.ArrowheadClouds;
 import eu.arrowhead.managementtool.activities.ArrowheadServices;
 import eu.arrowhead.managementtool.activities.ArrowheadSystems;
+import eu.arrowhead.managementtool.activities.CoreSystems;
 import eu.arrowhead.managementtool.fragments.ServerErrorDialog;
 import eu.arrowhead.managementtool.model.ErrorMessage;
 
@@ -113,12 +115,52 @@ public final class Utility {
                 Intent intent = new Intent(activity, ArrowheadSystems.class);
                 activity.startActivity(intent);
             }
+            return true;
         }
         else if(id == R.id.nav_arrowhead_services){
             if(!(activity.getClass() == ArrowheadServices.class)){
                 Intent intent = new Intent(activity, ArrowheadServices.class);
                 activity.startActivity(intent);
             }
+            return true;
+        }
+        else if(id == R.id.nav_arrowhead_clouds){
+            if(!(activity.getClass() == ArrowheadClouds.class)){
+                Intent intent = new Intent(activity, ArrowheadClouds.class);
+                activity.startActivity(intent);
+            }
+            return true;
+        }
+        else if(id == R.id.nav_core_systems){
+            if(!(activity.getClass() == CoreSystems.class)){
+                Intent intent = new Intent(activity, CoreSystems.class);
+                activity.startActivity(intent);
+            }
+            return true;
+        }
+        else if(id == R.id.nav_neighborhood_clouds){
+            Toast.makeText(activity, R.string.not_implemented_yet, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(id == R.id.nav_own_cloud){
+            Toast.makeText(activity, R.string.not_implemented_yet, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(id == R.id.nav_intracloud_auth){
+            Toast.makeText(activity, R.string.not_implemented_yet, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(id == R.id.nav_intercloud_auth){
+            Toast.makeText(activity, R.string.not_implemented_yet, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(id == R.id.nav_orch_store){
+            Toast.makeText(activity, R.string.not_implemented_yet, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(id == R.id.nav_service_registry){
+            Toast.makeText(activity, R.string.not_implemented_yet, Toast.LENGTH_SHORT).show();
+            return false;
         }
 
         return true;

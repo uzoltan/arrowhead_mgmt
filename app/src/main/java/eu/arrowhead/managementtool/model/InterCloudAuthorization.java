@@ -3,6 +3,7 @@ package eu.arrowhead.managementtool.model;
 
 public class InterCloudAuthorization {
 
+	private int id;
 	private ArrowheadCloud cloud;
 	private ArrowheadService service;
 	
@@ -14,7 +15,15 @@ public class InterCloudAuthorization {
 		this.service = service;
 	}
 
-	public ArrowheadCloud getCloud() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public ArrowheadCloud getCloud() {
 		return cloud;
 	}
 
