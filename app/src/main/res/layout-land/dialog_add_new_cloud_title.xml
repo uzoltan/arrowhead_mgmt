@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/add_new_cloud_dialog_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:drawablePadding="-85dp"
+    android:drawableStart="@drawable/ic_add_to_queue_black_48dp"
+    android:paddingTop="8dp"
+    android:paddingStart="85dp"
+    android:paddingEnd="0dp"
+    android:paddingBottom="8dp"
+    android:text="@string/add_new_cloud_title"
+    android:textColor="@color/black"
+    android:textSize="25sp" />

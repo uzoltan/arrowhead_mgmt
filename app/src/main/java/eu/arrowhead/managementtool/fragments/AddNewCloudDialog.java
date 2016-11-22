@@ -14,30 +14,30 @@ import android.view.View;
 
 import eu.arrowhead.managementtool.R;
 
-public class AddNewSystemDialog extends DialogFragment{
+public class AddNewCloudDialog extends DialogFragment{
 
-    public static final String TAG = "AddNewSystemFragment";
+    public static final String TAG = "AddNewCloudFragment";
 
-    public interface AddNewSystemListener {
-        void onSaveSystemButtonClicked(DialogFragment dialog);
+    public interface AddNewCloudListener {
+        void onSaveCloudButtonClicked(DialogFragment dialog);
     }
 
-    AddNewSystemDialog.AddNewSystemListener mListener;
+    AddNewCloudDialog.AddNewCloudListener mListener;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View title = inflater.inflate(R.layout.dialog_add_new_system_title, null);
-        View content = inflater.inflate(R.layout.dialog_add_new_system, null);
+        View title = inflater.inflate(R.layout.dialog_add_new_cloud_title, null);
+        View content = inflater.inflate(R.layout.dialog_add_new_cloud, null);
 
         builder.setCustomTitle(title);
         builder.setView(content)
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onSaveSystemButtonClicked(AddNewSystemDialog.this);
+                        mListener.onSaveCloudButtonClicked(AddNewCloudDialog.this);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -55,10 +55,10 @@ public class AddNewSystemDialog extends DialogFragment{
 
         Activity activity = getActivity();
         try {
-            mListener = (AddNewSystemDialog.AddNewSystemListener) activity;
+            mListener = (AddNewCloudDialog.AddNewCloudListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement AddNewSystemListener");
+                    + " must implement AddNewCloudListener");
         }
     }
 }

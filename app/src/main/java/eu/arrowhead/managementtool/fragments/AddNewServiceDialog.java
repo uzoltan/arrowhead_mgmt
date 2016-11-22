@@ -19,7 +19,7 @@ public class AddNewServiceDialog extends DialogFragment{
     public static final String TAG = "AddNewServiceFragment";
 
     public interface AddNewServiceListener {
-        public void onSaveServiceButtonClicked(DialogFragment dialog);
+        void onSaveServiceButtonClicked(DialogFragment dialog);
     }
 
     AddNewServiceDialog.AddNewServiceListener mListener;

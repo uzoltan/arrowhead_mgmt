@@ -131,7 +131,7 @@ public class SystemDetails extends Fragment {
                             portSwitcher.showPrevious();
                             authInfoSwitcher.showPrevious();
 
-                            Snackbar.make(rootView, R.string.system_update_succcess, Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(rootView, R.string.system_update_success, Snackbar.LENGTH_LONG).show();
                         }
                     },
                     new Response.ErrorListener() {
@@ -217,7 +217,7 @@ public class SystemDetails extends Fragment {
                         portSwitcher.showPrevious();
                         authInfoSwitcher.showPrevious();
 
-                        Snackbar.make(rootView, R.string.service_update_success, Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(rootView, R.string.system_update_success, Snackbar.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener() {

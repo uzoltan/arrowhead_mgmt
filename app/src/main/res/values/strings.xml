@@ -32,12 +32,14 @@
     <string name="status_code">Status code:</string>
     <string name="error_message">Error message:</string>
     <string name="action_add_service">Add Service</string>
+    <string name="action_add_cloud">Add Cloud</string>
     <string name="save_service">Save service</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="add_new_service_title">Add a new service</string>
     <string name="add_service_successful">Successfully saved the new service.</string>
     <string name="add_system_successful">Successfully saved the new system.</string>
+    <string name="add_cloud_successful">Successfully saved the new cloud.</string>
     <string name="title_activity_arrowhead_systems">Systems</string>
     <string name="system_group_label">System group:</string>
     <string name="system_name_label">System name:</string>
@@ -63,8 +65,10 @@
     <string name="consumer_store_based_text">Consumer Side Store Entries</string>
     <string name="provider_store_based_text">Provider Side Store Entries</string>
     <string name="arrowhead_logo">Arrowhead Logo</string>
-    <string name="system_update_succcess">System update is successful.</string>
+    <string name="system_update_success">System update is successful.</string>
+    <string name="cloud_update_success">Cloud update is successful.</string>
     <string name="system_update_request">System update request has been sent…</string>
+    <string name="cloud_update_request">Cloud update request has been sent…</string>
     <string name="nav_arrowhead_clouds">Arrowhead Clouds</string>
     <string name="nav_core_config_title">Core Configuration</string>
     <string name="nav_core_systems">Core Systems</string>
@@ -79,4 +83,8 @@
     <string name="title_activity_arrowhead_cloud__detail">ArrowheadCloud_Detail</string>
     <string name="title_activity_core_system__detail">CoreSystem_Detail</string>
     <string name="not_implemented_yet">Not implemented yet!</string>
+    <string name="operator_label">Operator:</string>
+    <string name="cloud_name_label">Cloud name:</string>
+    <string name="gatekeeper_service_uri_label">Gatekeeper service URI:</string>
+    <string name="add_new_cloud_title">Add a new cloud</string>
 </resources>

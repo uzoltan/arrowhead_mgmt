@@ -147,12 +147,12 @@ public class ArrowheadSystems extends AppCompatActivity implements
     public void onSaveSystemButtonClicked(DialogFragment dialog) {
         EditText systemGroupEt = (EditText) dialog.getDialog().findViewById(R.id.system_group_edittext);
         EditText systemNameEt = (EditText) dialog.getDialog().findViewById(R.id.system_name_edittext);
-        EditText AddressEt = (EditText) dialog.getDialog().findViewById(R.id.address_edittext);
-        EditText PortEt = (EditText) dialog.getDialog().findViewById(R.id.port_edittext);
-        EditText AuthInfoEt = (EditText) dialog.getDialog().findViewById(R.id.auth_info_edittext);
+        EditText addressEt = (EditText) dialog.getDialog().findViewById(R.id.address_edittext);
+        EditText portEt = (EditText) dialog.getDialog().findViewById(R.id.port_edittext);
+        EditText authInfoEt = (EditText) dialog.getDialog().findViewById(R.id.auth_info_edittext);
 
         ArrowheadSystem system = new ArrowheadSystem(systemGroupEt.getText().toString(), systemNameEt.getText().toString(),
-                AddressEt.getText().toString(), PortEt.getText().toString(), AuthInfoEt.getText().toString());
+                addressEt.getText().toString(), portEt.getText().toString(), authInfoEt.getText().toString());
         List<ArrowheadSystem> systemList = Collections.singletonList(system);
 
         JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, Utility.toJsonArray(systemList),
