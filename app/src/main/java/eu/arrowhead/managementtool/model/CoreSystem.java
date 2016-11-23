@@ -1,7 +1,9 @@
 package eu.arrowhead.managementtool.model;
 
 
-public class CoreSystem {
+import java.io.Serializable;
+
+public class CoreSystem implements Serializable {
 
 	private String systemName;
 	private String address;
