@@ -1,6 +1,8 @@
 package eu.arrowhead.managementtool.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -19,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.android.volley.Request;
@@ -53,6 +56,7 @@ public class ArrowheadSystems extends AppCompatActivity implements
     private RecyclerView mRecyclerView;
     private ArrowheadSystems_Adapter mAdapter;
     private SwipeRefreshLayout srl;
+    private SharedPreferences prefs;
 
     private List<ArrowheadSystem> systemList = new ArrayList<>();
 
@@ -63,6 +67,12 @@ public class ArrowheadSystems extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs = this.getSharedPreferences("eu.arrowhead.managementtool", Context.MODE_PRIVATE);
+        //TODO this part
+        /*if(prefs.getBoolean("first_launch", false)){
+           //start the welcoming page activity
+        }*/
+
         setContentView(R.layout.activity_arrowhead_systems);
         Toolbar toolbar = (Toolbar) findViewById(R.id.systems_toolbar);
         setSupportActionBar(toolbar);
@@ -151,29 +161,34 @@ public class ArrowheadSystems extends AppCompatActivity implements
         EditText portEt = (EditText) dialog.getDialog().findViewById(R.id.port_edittext);
         EditText authInfoEt = (EditText) dialog.getDialog().findViewById(R.id.auth_info_edittext);
 
-        ArrowheadSystem system = new ArrowheadSystem(systemGroupEt.getText().toString(), systemNameEt.getText().toString(),
-                addressEt.getText().toString(), portEt.getText().toString(), authInfoEt.getText().toString());
-        List<ArrowheadSystem> systemList = Collections.singletonList(system);
+        if(systemGroupEt.getText().toString().isEmpty() || systemNameEt.getText().toString().isEmpty()){
+            Toast.makeText(ArrowheadSystems.this, R.string.mandatory_fields_warning, Toast.LENGTH_LONG).show();
+        }
+        else{
+            ArrowheadSystem system = new ArrowheadSystem(systemGroupEt.getText().toString(), systemNameEt.getText().toString(),
+                    addressEt.getText().toString(), portEt.getText().toString(), authInfoEt.getText().toString());
+            List<ArrowheadSystem> systemList = Collections.singletonList(system);
 
-        JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, Utility.toJsonArray(systemList),
-                new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, Utility.toJsonArray(systemList),
+                    new Response.Listener<JSONArray>() {
 
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        sendGetAllRequest();
-                        Snackbar.make(drawer, R.string.add_system_successful, Snackbar.LENGTH_LONG).show();
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            sendGetAllRequest();
+                            Snackbar.make(drawer, R.string.add_system_successful, Snackbar.LENGTH_LONG).show();
+                        }
+                    },
+                    new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Utility.showServerErrorFragment(error, ArrowheadSystems.this);
+                        }
                     }
-                },
-                new Response.ErrorListener() {
+            );
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Utility.showServerErrorFragment(error, ArrowheadSystems.this);
-                    }
-                }
-        );
-
-        Networking.getInstance(this).addToRequestQueue(jsArrayRequest);
+            Networking.getInstance(this).addToRequestQueue(jsArrayRequest);
+        }
     }
 
     @Override

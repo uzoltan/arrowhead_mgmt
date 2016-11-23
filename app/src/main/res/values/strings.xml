@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">Management Tool</string>
     <string name="title_activity_arrowhead_services">Services</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
     <string name="no_connection">No internet connection!</string>
     <string name="no_data_available">No entry</string>
@@ -92,4 +90,11 @@
     <string name="gatekeeper_service_uri_label">Gatekeeper service URI:</string>
     <string name="add_new_cloud_title">Add a new cloud</string>
     <string name="service_uri_label">Service URI:</string>
+    <string name="mandatory_fields_warning">Please do not leave mandatory fields empty.</string>
+    <string name="operator_label_mandatory">Operator*:</string>
+    <string name="cloud_name_label_mandatory">Cloud name*:</string>
+    <string name="system_name_label_mandatory">System name*:</string>
+    <string name="service_group_label_mandatory">Service group*:</string>
+    <string name="service_definition_label_mandatory">Service definition*:</string>
+    <string name="system_group_label_mandatory">System group*:</string>
 </resources>

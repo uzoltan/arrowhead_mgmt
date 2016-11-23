@@ -17,7 +17,7 @@
             android:id="@+id/system_group_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/system_group_label"
+            android:text="@string/system_group_label_mandatory"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -31,7 +31,7 @@
             android:id="@+id/system_name_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/system_name_label"
+            android:text="@string/system_name_label_mandatory"
             android:textColor="@color/black"
             android:textSize="20sp" />
 

@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.android.volley.Request;
@@ -140,33 +141,38 @@ public class ArrowheadServices extends AppCompatActivity implements
         EditText serviceDefEt = (EditText) dialog.getDialog().findViewById(R.id.service_definition_edittext);
         EditText interfacesEt = (EditText) dialog.getDialog().findViewById(R.id.interfaces_edittext);
 
-        ArrowheadService service = new ArrowheadService(serviceGroupEt.getText().toString(), serviceDefEt.getText().toString(), null, null);
-        List<String> interfaces = new ArrayList<>();
-        if (!interfacesEt.getText().toString().equals("")) {
-            interfaces = Arrays.asList(interfacesEt.getText().toString().split(","));
+        if(serviceGroupEt.getText().toString().isEmpty() || serviceDefEt.getText().toString().isEmpty()){
+            Toast.makeText(ArrowheadServices.this, R.string.mandatory_fields_warning, Toast.LENGTH_LONG).show();
         }
-        service.setInterfaces(interfaces);
-        List<ArrowheadService> serviceList = Collections.singletonList(service);
+        else{
+            ArrowheadService service = new ArrowheadService(serviceGroupEt.getText().toString(), serviceDefEt.getText().toString(), null, null);
+            List<String> interfaces = new ArrayList<>();
+            if (!interfacesEt.getText().toString().equals("")) {
+                interfaces = Arrays.asList(interfacesEt.getText().toString().split(","));
+            }
+            service.setInterfaces(interfaces);
+            List<ArrowheadService> serviceList = Collections.singletonList(service);
 
-        JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, Utility.toJsonArray(serviceList),
-                new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, Utility.toJsonArray(serviceList),
+                    new Response.Listener<JSONArray>() {
 
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        sendGetAllRequest();
-                        Snackbar.make(drawer, R.string.add_service_successful, Snackbar.LENGTH_LONG).show();
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            sendGetAllRequest();
+                            Snackbar.make(drawer, R.string.add_service_successful, Snackbar.LENGTH_LONG).show();
+                        }
+                    },
+                    new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Utility.showServerErrorFragment(error, ArrowheadServices.this);
+                        }
                     }
-                },
-                new Response.ErrorListener() {
+            );
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Utility.showServerErrorFragment(error, ArrowheadServices.this);
-                    }
-                }
-        );
-
-        Networking.getInstance(this).addToRequestQueue(jsArrayRequest);
+            Networking.getInstance(this).addToRequestQueue(jsArrayRequest);
+        }
     }
 
     @Override

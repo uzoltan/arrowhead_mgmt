@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.android.volley.Request;
@@ -142,29 +143,33 @@ public class CoreSystems extends AppCompatActivity implements
         EditText serviceUriEt = (EditText) dialog.getDialog().findViewById(R.id.service_uri_edittext);
         EditText authInfoEt = (EditText) dialog.getDialog().findViewById(R.id.auth_info_edittext);
 
-        CoreSystem system = new CoreSystem(systemNameEt.getText().toString(), addressEt.getText().toString(),
-                portEt.getText().toString(), serviceUriEt.getText().toString(), authInfoEt.getText().toString(), false);
-        List<CoreSystem> systemList = Collections.singletonList(system);
+        if (systemNameEt.getText().toString().isEmpty()) {
+            Toast.makeText(CoreSystems.this, R.string.mandatory_fields_warning, Toast.LENGTH_LONG).show();
+        } else {
+            CoreSystem system = new CoreSystem(systemNameEt.getText().toString(), addressEt.getText().toString(),
+                    portEt.getText().toString(), serviceUriEt.getText().toString(), authInfoEt.getText().toString(), false);
+            List<CoreSystem> systemList = Collections.singletonList(system);
 
-        JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, Utility.toJsonArray(systemList),
-                new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, Utility.toJsonArray(systemList),
+                    new Response.Listener<JSONArray>() {
 
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        sendGetAllRequest();
-                        Snackbar.make(drawer, R.string.add_core_system_successful, Snackbar.LENGTH_LONG).show();
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            sendGetAllRequest();
+                            Snackbar.make(drawer, R.string.add_core_system_successful, Snackbar.LENGTH_LONG).show();
+                        }
+                    },
+                    new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Utility.showServerErrorFragment(error, CoreSystems.this);
+                        }
                     }
-                },
-                new Response.ErrorListener() {
+            );
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Utility.showServerErrorFragment(error, CoreSystems.this);
-                    }
-                }
-        );
-
-        Networking.getInstance(this).addToRequestQueue(jsArrayRequest);
+            Networking.getInstance(this).addToRequestQueue(jsArrayRequest);
+        }
     }
 
     @Override

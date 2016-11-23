@@ -17,7 +17,7 @@
             android:id="@+id/operator_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/operator_label"
+            android:text="@string/operator_label_mandatory"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -31,7 +31,7 @@
             android:id="@+id/cloud_name_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cloud_name_label"
+            android:text="@string/cloud_name_label_mandatory"
             android:textColor="@color/black"
             android:textSize="20sp" />
 

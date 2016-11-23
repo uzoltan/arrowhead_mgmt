@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.android.volley.Request;
@@ -142,29 +143,34 @@ public class ArrowheadClouds extends AppCompatActivity implements
         EditText serviceUriEt = (EditText) dialog.getDialog().findViewById(R.id.gatekeeper_service_uri_edittext);
         EditText authInfoEt = (EditText) dialog.getDialog().findViewById(R.id.auth_info_edittext);
 
-        ArrowheadCloud cloud = new ArrowheadCloud(operatorEt.getText().toString(), cloudNameEt.getText().toString(),
-                addressEt.getText().toString(), portEt.getText().toString(), serviceUriEt.getText().toString(), authInfoEt.getText().toString());
-        List<ArrowheadCloud> cloudList = Collections.singletonList(cloud);
+        if(operatorEt.getText().toString().isEmpty() || cloudNameEt.getText().toString().isEmpty()){
+            Toast.makeText(ArrowheadClouds.this, R.string.mandatory_fields_warning, Toast.LENGTH_LONG).show();
+        }
+        else{
+            ArrowheadCloud cloud = new ArrowheadCloud(operatorEt.getText().toString(), cloudNameEt.getText().toString(),
+                    addressEt.getText().toString(), portEt.getText().toString(), serviceUriEt.getText().toString(), authInfoEt.getText().toString());
+            List<ArrowheadCloud> cloudList = Collections.singletonList(cloud);
 
-        JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, Utility.toJsonArray(cloudList),
-                new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, Utility.toJsonArray(cloudList),
+                    new Response.Listener<JSONArray>() {
 
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        sendGetAllRequest();
-                        Snackbar.make(drawer, R.string.add_cloud_successful, Snackbar.LENGTH_LONG).show();
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            sendGetAllRequest();
+                            Snackbar.make(drawer, R.string.add_cloud_successful, Snackbar.LENGTH_LONG).show();
+                        }
+                    },
+                    new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Utility.showServerErrorFragment(error, ArrowheadClouds.this);
+                        }
                     }
-                },
-                new Response.ErrorListener() {
+            );
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Utility.showServerErrorFragment(error, ArrowheadClouds.this);
-                    }
-                }
-        );
-
-        Networking.getInstance(this).addToRequestQueue(jsArrayRequest);
+            Networking.getInstance(this).addToRequestQueue(jsArrayRequest);
+        }
     }
 
     @Override

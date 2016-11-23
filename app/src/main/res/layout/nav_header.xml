@@ -17,6 +17,6 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/arrowhead_logo"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/ic_arrowhead_logo" />
+        android:src="@drawable/ic_arrowhead_logo_48dp" />
 
 </LinearLayout>
