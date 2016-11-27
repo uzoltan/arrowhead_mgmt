@@ -25,7 +25,7 @@
             android:name=".activities.ArrowheadSystems"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ArrowheadSystem_Detail"
             android:label="@string/title_activity_arrowhead_systems__detail"
@@ -77,6 +77,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="eu.arrowhead.managementtool.activities.CoreSystems" />
         </activity>
+        <activity
+            android:name=".activities.FirstLaunchScreen"
+            android:label="@string/title_activity_first_launch_screen"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

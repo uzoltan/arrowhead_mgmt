@@ -97,4 +97,10 @@
     <string name="service_group_label_mandatory">Service group*:</string>
     <string name="service_definition_label_mandatory">Service definition*:</string>
     <string name="system_group_label_mandatory">System group*:</string>
+    <string name="title_activity_first_launch_screen">Arrowhead Management Tool</string>
+    <string name="welcome">WELCOME</string>
+    <string name="api_module_address_hint">API module address*</string>
+    <string name="log_module_address_hint">Log module address</string>
+    <string name="keystore_file_location_hint">Keystore file location</string>
+    <string name="confirm">Confirm</string>
 </resources>

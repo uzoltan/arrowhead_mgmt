@@ -68,10 +68,10 @@ public class ArrowheadSystems extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = this.getSharedPreferences("eu.arrowhead.managementtool", Context.MODE_PRIVATE);
-        //TODO this part
-        /*if(prefs.getBoolean("first_launch", false)){
-           //start the welcoming page activity
-        }*/
+        if(!prefs.getBoolean("not_first_launch", false)){
+            Intent intent = new Intent(ArrowheadSystems.this, FirstLaunchScreen.class);
+            startActivity(intent);
+        }
 
         setContentView(R.layout.activity_arrowhead_systems);
         Toolbar toolbar = (Toolbar) findViewById(R.id.systems_toolbar);
