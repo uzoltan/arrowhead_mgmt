@@ -16,7 +16,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/consumer_store_based"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/consumer_store_based_text"
@@ -36,14 +35,12 @@
                 android:layout_height="match_parent"
                 android:scrollbars="vertical" />
 
-            <!-- TODO imageview-val custom icon text helyett mutatósabb-->
-            <TextView
-                android:id="@+id/consumer_store_based_list_empty_view"
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/no_entry"
                 android:gravity="center"
-                android:text="@string/no_data_available"
-                android:textSize="25sp" />
+                android:src="@drawable/ic_no_entry_96dp" />
 
         </ViewSwitcher>
 
@@ -56,7 +53,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/provider_store_based"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/provider_store_based_text"
@@ -76,14 +72,12 @@
                 android:layout_height="match_parent"
                 android:scrollbars="vertical" />
 
-            <!-- TODO imageview-val custom icon text helyett mutatósabb-->
-            <TextView
-                android:id="@+id/provider_store_based_list_empty_view"
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/no_entry"
                 android:gravity="center"
-                android:text="@string/no_data_available"
-                android:textSize="25sp" />
+                android:src="@drawable/ic_no_entry_96dp" />
 
         </ViewSwitcher>
 

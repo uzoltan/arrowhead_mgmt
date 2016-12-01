@@ -14,7 +14,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/operator_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/operator_label_mandatory"
@@ -28,7 +27,6 @@
             android:inputType="text" />
 
         <TextView
-            android:id="@+id/cloud_name_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cloud_name_label_mandatory"
@@ -42,7 +40,6 @@
             android:inputType="text" />
 
         <TextView
-            android:id="@+id/address_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/address_label"
@@ -56,7 +53,6 @@
             android:inputType="text" />
 
         <TextView
-            android:id="@+id/port_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/port_label"
@@ -71,7 +67,6 @@
             android:inputType="number" />
 
         <TextView
-            android:id="@+id/gatekeeper_service_uri_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/gatekeeper_service_uri_label"
@@ -85,7 +80,6 @@
             android:inputType="textUri" />
 
         <TextView
-            android:id="@+id/auth_info_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/auth_info_label"

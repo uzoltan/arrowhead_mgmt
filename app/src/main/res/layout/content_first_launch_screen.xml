@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_first_launch_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -53,7 +52,6 @@
             app:hintTextAppearance="@style/TextInputLayout">
 
             <EditText
-                android:id="@+id/log_uri_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/log_module_address_hint"
@@ -61,20 +59,38 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="20dp"
-            app:hintTextAppearance="@style/TextInputLayout">
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/keystore_input"
-                android:layout_width="match_parent"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/keystore_file_location_hint"
-                android:inputType="textUri" />
+                android:layout_weight="4"
+                app:hintTextAppearance="@style/TextInputLayout">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/keystore_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/keystore_file_location_hint"
+                    android:inputType="textUri" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/browse_button"
+                style="@style/Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="@string/browse"
+                android:textSize="15sp" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/confirm_button"

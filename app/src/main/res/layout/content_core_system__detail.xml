@@ -17,7 +17,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/system_name_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/system_name_label"
@@ -44,7 +43,6 @@
         </ViewSwitcher>
 
         <TextView
-            android:id="@+id/address_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/address_label"
@@ -71,7 +69,6 @@
         </ViewSwitcher>
 
         <TextView
-            android:id="@+id/port_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/port_label"
@@ -98,7 +95,6 @@
         </ViewSwitcher>
 
         <TextView
-            android:id="@+id/service_uri_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/service_uri_label"
@@ -125,7 +121,6 @@
         </ViewSwitcher>
 
         <TextView
-            android:id="@+id/auth_info_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/auth_info_label"

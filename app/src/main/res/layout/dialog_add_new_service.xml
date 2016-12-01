@@ -9,7 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
-        android:id="@+id/service_group_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/service_group_label_mandatory"
@@ -23,7 +22,6 @@
         android:inputType="text" />
 
     <TextView
-        android:id="@+id/service_definition_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/service_definition_label_mandatory"
@@ -37,7 +35,6 @@
         android:inputType="text" />
 
     <TextView
-        android:id="@+id/interfaces_edit_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/interfaces_edit_label"

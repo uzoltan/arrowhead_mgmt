@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_core_systems"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/recycleview_vertical_margin"
@@ -31,14 +30,12 @@
                 android:layout_height="match_parent"
                 android:scrollbars="vertical" />
 
-            <!-- TODO imageview-val custom icon text helyett mutatósabb-->
-            <TextView
-                android:id="@+id/system_list_empty_view"
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/no_entry"
                 android:gravity="center"
-                android:text="@string/no_data_available"
-                android:textSize="25sp" />
+                android:src="@drawable/ic_no_entry_96dp" />
 
         </ViewSwitcher>
     </android.support.v4.widget.SwipeRefreshLayout>

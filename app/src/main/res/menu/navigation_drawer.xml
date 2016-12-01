@@ -4,14 +4,15 @@
     <group>
         <item
             android:id="@+id/nav_arrowhead_systems"
-            android:icon="@drawable/ic_laptop_mac_black_24dp"
+            android:icon="@drawable/ic_arrowhead_system_24dp"
             android:title="@string/nav_arrowhead_systems" />
         <item
             android:id="@+id/nav_arrowhead_services"
+            android:icon="@drawable/ic_arrrowhead_service_24dp"
             android:title="@string/nav_arrowhead_services" />
         <item
             android:id="@+id/nav_arrowhead_clouds"
-            android:icon="@drawable/ic_cloud_black_24dp"
+            android:icon="@drawable/ic_arrowhead_cloud_24dp"
             android:title="@string/nav_arrowhead_clouds" />
     </group>
 
@@ -19,11 +20,11 @@
         <menu>
             <item
                 android:id="@+id/nav_core_systems"
-                android:icon="@drawable/ic_laptop_mac_black_24dp"
+                android:icon="@drawable/ic_core_system_24dp"
                 android:title="@string/nav_core_systems" />
             <item
                 android:id="@+id/nav_neighborhood_clouds"
-                android:icon="@drawable/ic_cloud_black_24dp"
+                android:icon="@drawable/ic_double_cloud_24dp"
                 android:title="@string/nav_neighborhood_clouds" />
             <item
                 android:id="@+id/nav_own_cloud"
@@ -32,23 +33,25 @@
         </menu>
     </item>
 
-    <group android:id="@+id/authorization">
+    <group>
         <item
             android:id="@+id/nav_intracloud_auth"
-            android:icon="@drawable/ic_security_black_24dp"
+            android:icon="@drawable/ic_intra_auth_24dp"
             android:title="@string/nav_intracloud_auth" />
         <item
             android:id="@+id/nav_intercloud_auth"
-            android:icon="@drawable/ic_security_black_24dp"
+            android:icon="@drawable/ic_inter_auth_24dp"
             android:title="@string/intercloud_auth" />
     </group>
 
-    <group android:id="@+id/singles">
+    <group>
         <item
             android:id="@+id/nav_orch_store"
+            android:icon="@drawable/ic_orch_store_24dp"
             android:title="@string/nav_orch_store" />
         <item
             android:id="@+id/nav_service_registry"
+            android:icon="@drawable/ic_service_reg_24dp"
             android:title="@string/nav_service_registry" />
     </group>
 
