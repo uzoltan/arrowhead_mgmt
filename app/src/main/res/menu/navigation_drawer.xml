@@ -33,7 +33,7 @@
         </menu>
     </item>
 
-    <group>
+    <group android:id="@+id/auth_group">
         <item
             android:id="@+id/nav_intracloud_auth"
             android:icon="@drawable/ic_intra_auth_24dp"
@@ -44,7 +44,7 @@
             android:title="@string/intercloud_auth" />
     </group>
 
-    <group>
+    <group android:id="@+id/misc_group">
         <item
             android:id="@+id/nav_orch_store"
             android:icon="@drawable/ic_orch_store_24dp"

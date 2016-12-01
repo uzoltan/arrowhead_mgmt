@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/no_entry"
                 android:gravity="center"
-                android:src="@drawable/ic_no_entry_96dp" />
+                android:src="@drawable/ic_no_entry_72dp" />
 
         </ViewSwitcher>
     </android.support.v4.widget.SwipeRefreshLayout>
