@@ -37,7 +37,7 @@ import eu.arrowhead.managementtool.model.ErrorMessage;
 
 public final class Utility {
 
-    private static final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+    private static final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 
     private Utility(){
     }
