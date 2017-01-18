@@ -2,6 +2,8 @@ package eu.arrowhead.managementtool.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -45,7 +47,7 @@ public class CoreSystem_Detail extends AppCompatActivity implements
     private EditText systemNameEt, addressEt, portEt, serviceUriEt, authInfoEt;
     private ViewSwitcher snSwitcher, addressSwitcher, portSwitcher, serviceUriSwitcher, authInfoSwitcher;
 
-    private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/configuration/coresystems";
+    private static String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,10 @@ public class CoreSystem_Detail extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.core_system_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        SharedPreferences prefs = getSharedPreferences("eu.arrowhead.managementtool", Context.MODE_PRIVATE);
+        URL = Uri.parse(prefs.getString("api_address", null)).buildUpon()
+                .appendPath("configuration").appendPath("coresystems").build().toString();
 
         rootView = (CoordinatorLayout) findViewById(R.id.core_system_detail_root_view);
         saveButton = (Button) findViewById(R.id.save_changes_button);

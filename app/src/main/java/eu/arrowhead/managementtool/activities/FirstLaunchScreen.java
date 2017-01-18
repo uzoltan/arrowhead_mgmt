@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,7 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import eu.arrowhead.managementtool.R;
+import eu.arrowhead.managementtool.utility.Utility;
+import eu.arrowhead.managementtool.volley.Networking;
 
 public class FirstLaunchScreen extends AppCompatActivity {
 
@@ -22,6 +28,7 @@ public class FirstLaunchScreen extends AppCompatActivity {
     private SharedPreferences prefs;
 
     private static final int OPEN_FILE_REQUEST = 0;
+    private static String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +38,13 @@ public class FirstLaunchScreen extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         apiAddress = (EditText) findViewById(R.id.api_uri_input);
-        keystorePath = (EditText) findViewById(R.id.keystore_input);
-        browseButton = (Button) findViewById(R.id.browse_button);
+        //keystorePath = (EditText) findViewById(R.id.keystore_input);
+        //browseButton = (Button) findViewById(R.id.browse_button);
         confirmButton = (Button) findViewById(R.id.confirm_button);
 
         prefs = this.getSharedPreferences("eu.arrowhead.managementtool", Context.MODE_PRIVATE);
 
-        browseButton.setOnClickListener(new View.OnClickListener() {
+        /*browseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -45,20 +52,52 @@ public class FirstLaunchScreen extends AppCompatActivity {
                 intent.setDataAndType(uri, "file/*");
                 startActivityForResult(Intent.createChooser(intent, "Choose keystore file"), OPEN_FILE_REQUEST);
             }
-        });
+        });*/
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(apiAddress.getText().toString().isEmpty()){
-                    Toast.makeText(FirstLaunchScreen.this, R.string.mandatory_fields_warning, Toast.LENGTH_LONG).show();
+                URL = apiAddress.getText().toString();
+                if(URL.isEmpty()){
+                    Toast.makeText(FirstLaunchScreen.this, R.string.api_address_warning, Toast.LENGTH_LONG).show();
                 }
                 else{
-                    prefs.edit().putBoolean("not_first_launch", true).apply();
-                    finish();
+                    validateURL();
                 }
             }
         });
+    }
+
+    public void validateURL(){
+        String testURL = Uri.parse(URL).buildUpon().appendPath("common").build().toString();
+        if (Utility.isConnected(this)) {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, testURL,
+                    new Response.Listener<String>() {
+
+                        @Override
+                        public void onResponse(String response) {
+                            if(response.equals("Got it!")){
+                                prefs.edit().putString("api_address", URL).apply();
+                                prefs.edit().putBoolean("not_first_launch", true).apply();
+                                finish();
+                            }
+                            else{
+                                Toast.makeText(FirstLaunchScreen.this, R.string.api_address_warning, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(FirstLaunchScreen.this, R.string.api_address_warning, Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+            Networking.getInstance(this).addToRequestQueue(stringRequest);
+        } else {
+            Utility.showNoConnectionToast(FirstLaunchScreen.this);
+        }
     }
 
     @Override

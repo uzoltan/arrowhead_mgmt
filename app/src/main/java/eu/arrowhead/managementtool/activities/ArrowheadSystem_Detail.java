@@ -24,7 +24,6 @@ public class ArrowheadSystem_Detail extends AppCompatActivity implements
         ConfirmDeleteDialog.ConfirmDeleteListener {
 
     private ArrowheadSystem system;
-
     private SystemDetails systemDetails;
 
     @Override

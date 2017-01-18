@@ -1,5 +1,8 @@
 package eu.arrowhead.managementtool.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -51,7 +54,7 @@ public class ArrowheadServices extends AppCompatActivity implements
     private SwipeRefreshLayout srl;
 
     private List<ArrowheadService> serviceList = new ArrayList<>();
-    private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/services";
+    private static String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,10 @@ public class ArrowheadServices extends AppCompatActivity implements
         setContentView(R.layout.activity_arrowhead_services);
         Toolbar toolbar = (Toolbar) findViewById(R.id.services_toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences prefs = getSharedPreferences("eu.arrowhead.managementtool", Context.MODE_PRIVATE);
+        URL = Uri.parse(prefs.getString("api_address", null)).buildUpon()
+                .appendPath("common").appendPath("services").build().toString();
 
         //navigation drawer setup
         drawer = (DrawerLayout) findViewById(R.id.services_root_view);

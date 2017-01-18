@@ -16,6 +16,7 @@
             android:title="@string/nav_arrowhead_clouds" />
     </group>
 
+    <!-- Not implemented parts commented out
     <item android:title="@string/nav_core_config_title">
         <menu>
             <item
@@ -43,12 +44,19 @@
             android:icon="@drawable/ic_inter_auth_24dp"
             android:title="@string/intercloud_auth" />
     </group>
+    -->
 
     <group android:id="@+id/misc_group">
+        <!--
         <item
             android:id="@+id/nav_orch_store"
             android:icon="@drawable/ic_orch_store_24dp"
             android:title="@string/nav_orch_store" />
+        -->
+        <item
+            android:id="@+id/nav_core_systems"
+            android:icon="@drawable/ic_core_system_24dp"
+            android:title="@string/nav_core_systems" />
         <item
             android:id="@+id/nav_service_registry"
             android:icon="@drawable/ic_service_reg_24dp"

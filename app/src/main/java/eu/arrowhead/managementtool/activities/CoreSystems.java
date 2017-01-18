@@ -1,5 +1,8 @@
 package eu.arrowhead.managementtool.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -51,7 +54,7 @@ public class CoreSystems extends AppCompatActivity implements
 
     //TODO isSecure boolean nincs implementálva még, mivel tmit szerveren nem volt updatelve még a db
     private List<CoreSystem> systemList = new ArrayList<>();
-    private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/configuration/coresystems";
+    private static String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,10 @@ public class CoreSystems extends AppCompatActivity implements
         setContentView(R.layout.activity_core_systems);
         Toolbar toolbar = (Toolbar) findViewById(R.id.core_systems_toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences prefs = getSharedPreferences("eu.arrowhead.managementtool", Context.MODE_PRIVATE);
+        URL = Uri.parse(prefs.getString("api_address", null)).buildUpon()
+                .appendPath("configuration").appendPath("coresystems").build().toString();
 
         //navigation drawer setup
         drawer = (DrawerLayout) findViewById(R.id.core_systems_root_view);

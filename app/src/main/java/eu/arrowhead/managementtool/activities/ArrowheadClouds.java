@@ -1,5 +1,8 @@
 package eu.arrowhead.managementtool.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -50,7 +53,7 @@ public class ArrowheadClouds extends AppCompatActivity implements
     private SwipeRefreshLayout srl;
 
     private List<ArrowheadCloud> cloudList = new ArrayList<>();
-    private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/clouds";
+    private static String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,10 @@ public class ArrowheadClouds extends AppCompatActivity implements
         setContentView(R.layout.activity_arrowhead_clouds);
         Toolbar toolbar = (Toolbar) findViewById(R.id.clouds_toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences prefs = getSharedPreferences("eu.arrowhead.managementtool", Context.MODE_PRIVATE);
+        URL = Uri.parse(prefs.getString("api_address", null)).buildUpon()
+                .appendPath("common").appendPath("clouds").build().toString();
 
         //navigation drawer setup
         drawer = (DrawerLayout) findViewById(R.id.clouds_root_view);

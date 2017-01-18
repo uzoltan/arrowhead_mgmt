@@ -1,6 +1,9 @@
 package eu.arrowhead.managementtool.fragments;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -40,7 +43,7 @@ public class SystemAuthRights extends Fragment {
     private RecyclerView consumerRecView, providerRecView;
     private ArrowheadSystem_AuthAdapter consumerAdapter, providerAdapter;
 
-    private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/auth/intracloud";
+    private static String URL;
 
     public SystemAuthRights() {
     }
@@ -50,6 +53,10 @@ public class SystemAuthRights extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         system = (ArrowheadSystem) args.getSerializable("arrowhead_system");
+
+        SharedPreferences prefs = getActivity().getSharedPreferences("eu.arrowhead.managementtool", Context.MODE_PRIVATE);
+        URL = Uri.parse(prefs.getString("api_address", null)).buildUpon()
+                .appendPath("auth").appendPath("intracloud").build().toString();
     }
 
     @Override

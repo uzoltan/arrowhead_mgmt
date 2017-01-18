@@ -2,6 +2,8 @@ package eu.arrowhead.managementtool.fragments;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -50,7 +52,7 @@ public class SystemDetails extends Fragment {
     private EditText systemGroupEt, systemNameEt, addressEt, portEt, authInfoEt;
     private ViewSwitcher sgSwitcher, snSwitcher, addressSwitcher, portSwitcher, authInfoSwitcher;
 
-    private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/systems";
+    private static String URL;
 
     public SystemDetails(){
     }
@@ -60,6 +62,10 @@ public class SystemDetails extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         system = (ArrowheadSystem) args.getSerializable("arrowhead_system");
+
+        SharedPreferences prefs = getActivity().getSharedPreferences("eu.arrowhead.managementtool", Context.MODE_PRIVATE);
+        URL = Uri.parse(prefs.getString("api_address", null)).buildUpon()
+                .appendPath("common").appendPath("systems").build().toString();
     }
 
     @Override

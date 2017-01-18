@@ -2,6 +2,8 @@ package eu.arrowhead.managementtool.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -53,7 +55,7 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
 
-    private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/services";
+    private static String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,10 @@ public class ArrowheadService_Detail extends AppCompatActivity implements
         setSupportActionBar(toolbar);
         //It will not be null ever, since we use a Toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        SharedPreferences prefs = getSharedPreferences("eu.arrowhead.managementtool", Context.MODE_PRIVATE);
+        URL = Uri.parse(prefs.getString("api_address", null)).buildUpon()
+                .appendPath("common").appendPath("services").build().toString();
 
         rootView = (CoordinatorLayout) findViewById(R.id.service_detail_root_view);
         saveButton = (Button) findViewById(R.id.save_changes_button);

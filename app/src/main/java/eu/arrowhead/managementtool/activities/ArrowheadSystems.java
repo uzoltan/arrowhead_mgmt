@@ -59,9 +59,7 @@ public class ArrowheadSystems extends AppCompatActivity implements
     private SharedPreferences prefs;
 
     private List<ArrowheadSystem> systemList = new ArrayList<>();
-
-    //TODO replace hardwired url with proper solution in the whole project
-    private static final String URL = "http://arrowhead.tmit.bme.hu:8081/api/common/systems";
+    private static String URL;
     private static final int SCAN_QR_CODE_REQUEST = 0;
 
     @Override
@@ -97,6 +95,9 @@ public class ArrowheadSystems extends AppCompatActivity implements
 
     @Override
     protected void onResume() {
+        URL = Uri.parse(prefs.getString("api_address", "")).buildUpon()
+                .appendPath("common").appendPath("systems").build().toString();
+
         //We send the request here, because the user can delete a list element in the detail activity, and we want the list to update automatically.
         sendGetAllRequest();
         super.onResume();

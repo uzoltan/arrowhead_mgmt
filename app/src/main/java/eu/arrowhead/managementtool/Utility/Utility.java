@@ -138,7 +138,7 @@ public final class Utility {
             }
             return true;
         }
-        else if(id == R.id.nav_neighborhood_clouds){
+        /*else if(id == R.id.nav_neighborhood_clouds){
             Toast.makeText(activity, R.string.not_implemented_yet, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -157,7 +157,7 @@ public final class Utility {
         else if(id == R.id.nav_orch_store){
             Toast.makeText(activity, R.string.not_implemented_yet, Toast.LENGTH_SHORT).show();
             return false;
-        }
+        }*/
         else if(id == R.id.nav_service_registry){
             Toast.makeText(activity, R.string.not_implemented_yet, Toast.LENGTH_SHORT).show();
             return false;

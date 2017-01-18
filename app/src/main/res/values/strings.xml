@@ -15,7 +15,8 @@
     <string name="add_service_successful">Successfully saved the new service.</string>
     <string name="add_system_successful">Successfully saved the new system.</string>
     <string name="address_label">Address:</string>
-    <string name="api_module_address_hint">API module address*</string>
+    <string name="api_module_address_hint">API module address</string>
+    <string name="api_address_warning">Please provide a valid URL for your Arrowhead API module.</string>
     <string name="app_name">Management Tool</string>
     <string name="arrowhead_logo">Arrowhead Logo</string>
     <string name="auth_info_label">Authentication info:</string>
