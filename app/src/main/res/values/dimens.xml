@@ -8,4 +8,5 @@
 
     <dimen name="recycleview_horizontal_margin">4dp</dimen>
     <dimen name="recycleview_vertical_margin">8dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

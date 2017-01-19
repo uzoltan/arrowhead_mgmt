@@ -80,7 +80,11 @@
         <activity
             android:name=".activities.FirstLaunchScreen"
             android:label="@string/title_activity_first_launch_screen"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.ServiceRegistry"
+            android:label="@string/title_activity_service_registry"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

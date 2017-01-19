@@ -23,12 +23,13 @@ import eu.arrowhead.managementtool.volley.Networking;
 
 public class FirstLaunchScreen extends AppCompatActivity {
 
-    private EditText apiAddress, keystorePath;
+    private EditText apiAddress, srAddress, keystorePath;
     private Button browseButton, confirmButton;
     private SharedPreferences prefs;
 
     private static final int OPEN_FILE_REQUEST = 0;
-    private static String URL;
+    private static String API_URL;
+    private static String SR_URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class FirstLaunchScreen extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         apiAddress = (EditText) findViewById(R.id.api_uri_input);
+        srAddress = (EditText) findViewById(R.id.sr_uri_input);
         //keystorePath = (EditText) findViewById(R.id.keystore_input);
         //browseButton = (Button) findViewById(R.id.browse_button);
         confirmButton = (Button) findViewById(R.id.confirm_button);
@@ -57,19 +59,27 @@ public class FirstLaunchScreen extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                URL = apiAddress.getText().toString();
-                if(URL.isEmpty()){
+                API_URL = apiAddress.getText().toString();
+                if(API_URL.isEmpty()){
                     Toast.makeText(FirstLaunchScreen.this, R.string.api_address_warning, Toast.LENGTH_LONG).show();
                 }
                 else{
-                    validateURL();
+                    validateAPI_URL();
+                }
+
+                SR_URL = srAddress.getText().toString();
+                if(SR_URL.isEmpty()){
+                    Toast.makeText(FirstLaunchScreen.this, R.string.sr_address_warning, Toast.LENGTH_LONG).show();
+                }
+                else{
+                    validateSR_URL();
                 }
             }
         });
     }
 
-    public void validateURL(){
-        String testURL = Uri.parse(URL).buildUpon().appendPath("common").build().toString();
+    public void validateAPI_URL(){
+        String testURL = Uri.parse(API_URL).buildUpon().appendPath("common").build().toString();
         if (Utility.isConnected(this)) {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, testURL,
                     new Response.Listener<String>() {
@@ -77,9 +87,11 @@ public class FirstLaunchScreen extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             if(response.equals("Got it!")){
-                                prefs.edit().putString("api_address", URL).apply();
-                                prefs.edit().putBoolean("not_first_launch", true).apply();
-                                finish();
+                                prefs.edit().putString("api_address", API_URL).apply();
+                                if(!prefs.getString("sr_address", "").isEmpty()){
+                                    prefs.edit().putBoolean("not_first_launch", true).apply();
+                                    finish();
+                                }
                             }
                             else{
                                 Toast.makeText(FirstLaunchScreen.this, R.string.api_address_warning, Toast.LENGTH_LONG).show();
@@ -91,6 +103,39 @@ public class FirstLaunchScreen extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Toast.makeText(FirstLaunchScreen.this, R.string.api_address_warning, Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+            Networking.getInstance(this).addToRequestQueue(stringRequest);
+        } else {
+            Utility.showNoConnectionToast(FirstLaunchScreen.this);
+        }
+    }
+
+    public void validateSR_URL() {
+        if (Utility.isConnected(this)) {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, SR_URL,
+                    new Response.Listener<String>() {
+
+                        @Override
+                        public void onResponse(String response) {
+                            if(response.equals("This is the Service Registry.")){
+                                prefs.edit().putString("sr_address", API_URL).apply();
+                                if(!prefs.getString("api_address", "").isEmpty()){
+                                    prefs.edit().putBoolean("not_first_launch", true).apply();
+                                    finish();
+                                }
+                            }
+                            else{
+                                Toast.makeText(FirstLaunchScreen.this, R.string.sr_address_warning, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(FirstLaunchScreen.this, R.string.sr_address_warning, Toast.LENGTH_LONG).show();
                         }
                     });
 
