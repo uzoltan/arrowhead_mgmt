@@ -84,7 +84,8 @@
         <activity
             android:name=".activities.ServiceRegistry"
             android:label="@string/title_activity_service_registry"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

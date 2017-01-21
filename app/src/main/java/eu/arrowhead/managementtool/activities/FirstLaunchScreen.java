@@ -120,7 +120,7 @@ public class FirstLaunchScreen extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             if(response.equals("This is the Service Registry.")){
-                                prefs.edit().putString("sr_address", API_URL).apply();
+                                prefs.edit().putString("sr_address", SR_URL).apply();
                                 if(!prefs.getString("api_address", "").isEmpty()){
                                     prefs.edit().putBoolean("not_first_launch", true).apply();
                                     finish();

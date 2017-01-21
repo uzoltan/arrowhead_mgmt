@@ -99,7 +99,7 @@
     <string name="title_activity_first_launch_screen">Arrowhead Management Tool</string>
     <string name="welcome">WELCOME</string>
     <string name="yes">Yes</string>
-    <string name="title_activity_service_registry">ServiceRegistry</string>
+    <string name="title_activity_service_registry">Service Registry</string>
 
     <string name="action_settings">Settings</string>
     <string name="sr_module_address_hint">Service Registry module address</string>

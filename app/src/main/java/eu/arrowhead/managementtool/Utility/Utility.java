@@ -31,6 +31,7 @@ import eu.arrowhead.managementtool.activities.ArrowheadClouds;
 import eu.arrowhead.managementtool.activities.ArrowheadServices;
 import eu.arrowhead.managementtool.activities.ArrowheadSystems;
 import eu.arrowhead.managementtool.activities.CoreSystems;
+import eu.arrowhead.managementtool.activities.ServiceRegistry;
 import eu.arrowhead.managementtool.fragments.ServerErrorDialog;
 import eu.arrowhead.managementtool.model.ErrorMessage;
 
@@ -111,28 +112,28 @@ public final class Utility {
         int id = item.getItemId();
 
         if (id == R.id.nav_arrowhead_systems) {
-            if(!(activity.getClass() == ArrowheadSystems.class)){
+            if(activity.getClass() != ArrowheadSystems.class){
                 Intent intent = new Intent(activity, ArrowheadSystems.class);
                 activity.startActivity(intent);
             }
             return true;
         }
         else if(id == R.id.nav_arrowhead_services){
-            if(!(activity.getClass() == ArrowheadServices.class)){
+            if(activity.getClass() != ArrowheadServices.class){
                 Intent intent = new Intent(activity, ArrowheadServices.class);
                 activity.startActivity(intent);
             }
             return true;
         }
         else if(id == R.id.nav_arrowhead_clouds){
-            if(!(activity.getClass() == ArrowheadClouds.class)){
+            if(activity.getClass() != ArrowheadClouds.class){
                 Intent intent = new Intent(activity, ArrowheadClouds.class);
                 activity.startActivity(intent);
             }
             return true;
         }
         else if(id == R.id.nav_core_systems){
-            if(!(activity.getClass() == CoreSystems.class)){
+            if(activity.getClass() != CoreSystems.class){
                 Intent intent = new Intent(activity, CoreSystems.class);
                 activity.startActivity(intent);
             }
@@ -159,8 +160,11 @@ public final class Utility {
             return false;
         }*/
         else if(id == R.id.nav_service_registry){
-            Toast.makeText(activity, R.string.not_implemented_yet, Toast.LENGTH_SHORT).show();
-            return false;
+            if(activity.getClass() != ServiceRegistry.class){
+                Intent intent = new Intent(activity, ServiceRegistry.class);
+                activity.startActivity(intent);
+            }
+            return true;
         }
 
         return true;
