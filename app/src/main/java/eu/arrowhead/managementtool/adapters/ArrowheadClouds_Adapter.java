@@ -15,6 +15,7 @@ import java.util.List;
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.activities.ArrowheadCloud_Detail;
 import eu.arrowhead.managementtool.model.ArrowheadCloud;
+import eu.arrowhead.managementtool.utility.Utility;
 
 public class ArrowheadClouds_Adapter extends RecyclerView.Adapter<ArrowheadClouds_Adapter.CloudViewHolder>{
 
@@ -40,8 +41,8 @@ public class ArrowheadClouds_Adapter extends RecyclerView.Adapter<ArrowheadCloud
     @Override
     public void onBindViewHolder(CloudViewHolder holder, int position) {
         final ArrowheadCloud cloud = cloudList.get(position);
-        holder.vOperator.setText(cloud.getOperator());
         holder.vCloudName.setText(cloud.getCloudName());
+        holder.vOperator.setText(cloud.getOperator());
 
         holder.vCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +50,40 @@ public class ArrowheadClouds_Adapter extends RecyclerView.Adapter<ArrowheadCloud
                 Intent intent = new Intent(context, ArrowheadCloud_Detail.class);
                 intent.putExtra("arrowhead_cloud", cloud);
                 context.startActivity(intent);
+            }
+        });
+
+        holder.vCloudName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ArrowheadCloud_Detail.class);
+                intent.putExtra("arrowhead_cloud", cloud);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.vOperator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ArrowheadCloud_Detail.class);
+                intent.putExtra("arrowhead_cloud", cloud);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.vCloudName.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Utility.showHelperToast(context, "Cloud name");
+                return true;
+            }
+        });
+
+        holder.vOperator.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Utility.showHelperToast(context, "Operator name");
+                return true;
             }
         });
     }

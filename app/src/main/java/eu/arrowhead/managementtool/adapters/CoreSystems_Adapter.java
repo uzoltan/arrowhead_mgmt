@@ -15,6 +15,7 @@ import java.util.List;
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.activities.CoreSystem_Detail;
 import eu.arrowhead.managementtool.model.CoreSystem;
+import eu.arrowhead.managementtool.utility.Utility;
 
 public class CoreSystems_Adapter extends RecyclerView.Adapter<CoreSystems_Adapter.SystemViewHolder>{
 
@@ -49,6 +50,31 @@ public class CoreSystems_Adapter extends RecyclerView.Adapter<CoreSystems_Adapte
                 Intent intent = new Intent(context, CoreSystem_Detail.class);
                 intent.putExtra("core_system", system);
                 context.startActivity(intent);
+            }
+        });
+
+        holder.vSystemName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, CoreSystem_Detail.class);
+                intent.putExtra("core_system", system);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.vSystemName.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Utility.showHelperToast(context, "System name");
+                return true;
+            }
+        });
+
+        holder.vAddress.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Utility.showHelperToast(context, "System address");
+                return true;
             }
         });
     }

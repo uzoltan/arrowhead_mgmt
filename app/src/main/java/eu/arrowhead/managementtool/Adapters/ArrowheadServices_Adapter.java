@@ -15,6 +15,7 @@ import java.util.List;
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.activities.ArrowheadService_Detail;
 import eu.arrowhead.managementtool.model.ArrowheadService;
+import eu.arrowhead.managementtool.utility.Utility;
 
 public class ArrowheadServices_Adapter extends RecyclerView.Adapter<ArrowheadServices_Adapter.ServiceViewHolder>{
 
@@ -40,8 +41,8 @@ public class ArrowheadServices_Adapter extends RecyclerView.Adapter<ArrowheadSer
     @Override
     public void onBindViewHolder(ServiceViewHolder holder, int position) {
         final ArrowheadService service = serviceList.get(position);
-        holder.vServiceGroup.setText(service.getServiceGroup());
         holder.vServiceName.setText(service.getServiceDefinition());
+        holder.vServiceGroup.setText(service.getServiceGroup());
 
         holder.vCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +50,40 @@ public class ArrowheadServices_Adapter extends RecyclerView.Adapter<ArrowheadSer
                 Intent intent = new Intent(context, ArrowheadService_Detail.class);
                 intent.putExtra("arrowhead_service", service);
                 context.startActivity(intent);
+            }
+        });
+
+        holder.vServiceName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ArrowheadService_Detail.class);
+                intent.putExtra("arrowhead_service", service);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.vServiceGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ArrowheadService_Detail.class);
+                intent.putExtra("arrowhead_service", service);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.vServiceName.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Utility.showHelperToast(context, "Service name");
+                return true;
+            }
+        });
+
+        holder.vServiceGroup.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Utility.showHelperToast(context, "Service group");
+                return true;
             }
         });
     }

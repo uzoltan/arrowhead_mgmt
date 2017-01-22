@@ -170,4 +170,8 @@ public final class Utility {
         return true;
     }
 
+    public static void showHelperToast(Context ctx, String message){
+        Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show();
+    }
+
 }

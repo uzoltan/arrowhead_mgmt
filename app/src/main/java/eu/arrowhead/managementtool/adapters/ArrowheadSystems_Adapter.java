@@ -15,6 +15,7 @@ import java.util.List;
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.activities.ArrowheadSystem_Detail;
 import eu.arrowhead.managementtool.model.ArrowheadSystem;
+import eu.arrowhead.managementtool.utility.Utility;
 
 public class ArrowheadSystems_Adapter extends RecyclerView.Adapter<ArrowheadSystems_Adapter.SystemViewHolder>{
 
@@ -40,8 +41,8 @@ public class ArrowheadSystems_Adapter extends RecyclerView.Adapter<ArrowheadSyst
     @Override
     public void onBindViewHolder(SystemViewHolder holder, int position) {
         final ArrowheadSystem system = systemList.get(position);
-        holder.vSystemGroup.setText(system.getSystemGroup());
         holder.vSystemName.setText(system.getSystemName());
+        holder.vSystemGroup.setText(system.getSystemGroup());
 
         holder.vCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +50,40 @@ public class ArrowheadSystems_Adapter extends RecyclerView.Adapter<ArrowheadSyst
                 Intent intent = new Intent(context, ArrowheadSystem_Detail.class);
                 intent.putExtra("arrowhead_system", system);
                 context.startActivity(intent);
+            }
+        });
+
+        holder.vSystemName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ArrowheadSystem_Detail.class);
+                intent.putExtra("arrowhead_system", system);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.vSystemGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ArrowheadSystem_Detail.class);
+                intent.putExtra("arrowhead_system", system);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.vSystemName.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Utility.showHelperToast(context, "System name");
+                return true;
+            }
+        });
+
+        holder.vSystemGroup.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Utility.showHelperToast(context, "System group");
+                return true;
             }
         });
     }

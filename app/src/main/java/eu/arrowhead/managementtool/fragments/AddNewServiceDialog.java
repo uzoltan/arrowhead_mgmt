@@ -11,6 +11,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 
 import eu.arrowhead.managementtool.R;
 
@@ -37,7 +38,7 @@ public class AddNewServiceDialog extends DialogFragment{
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onSaveServiceButtonClicked(AddNewServiceDialog.this);
+                        //mListener.onSaveServiceButtonClicked(AddNewServiceDialog.this);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -47,6 +48,23 @@ public class AddNewServiceDialog extends DialogFragment{
                 });
 
         return builder.create();
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+
+        final AlertDialog dialog = (AlertDialog) getDialog();
+        Button positiveButton = dialog.getButton(Dialog.BUTTON_POSITIVE);
+        positiveButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mListener.onSaveServiceButtonClicked(AddNewServiceDialog.this);
+            }
+        });
     }
 
     @Override

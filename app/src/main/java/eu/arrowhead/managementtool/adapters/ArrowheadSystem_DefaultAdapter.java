@@ -18,16 +18,17 @@ import java.util.List;
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.model.OrchestrationStore;
 import eu.arrowhead.managementtool.model.SystemStoreBased_ListEntry;
+import eu.arrowhead.managementtool.utility.Utility;
 
 public class ArrowheadSystem_DefaultAdapter extends
         ExpandableRecyclerAdapter<ArrowheadSystem_DefaultAdapter.ServiceViewHolder, ArrowheadSystem_DefaultAdapter.DetailsViewHolder> {
 
     private LayoutInflater mInflator;
-    private Context context;
+    private Context ctx;
 
     public ArrowheadSystem_DefaultAdapter(Context context, @NonNull List<? extends ParentListItem> parentItemList) {
         super(parentItemList);
-        this.context = context;
+        ctx = context;
         mInflator = LayoutInflater.from(context);
     }
 
@@ -52,7 +53,7 @@ public class ArrowheadSystem_DefaultAdapter extends
     @Override
     public void onBindChildViewHolder(ArrowheadSystem_DefaultAdapter.DetailsViewHolder childViewHolder, int position, Object childListItem) {
         OrchestrationStore storeEntry = (OrchestrationStore) childListItem;
-        childViewHolder.bind(storeEntry);
+        childViewHolder.bind(storeEntry, ctx);
     }
 
     static class ServiceViewHolder extends ParentViewHolder {
@@ -87,7 +88,7 @@ public class ArrowheadSystem_DefaultAdapter extends
             vPriority = (TextView) v.findViewById(R.id.priority);
         }
 
-        void bind(OrchestrationStore storeEntry) {
+        void bind(OrchestrationStore storeEntry, final Context ctx) {
             if(storeEntry.isConsumerSide()){
                 vSystemName.setText(storeEntry.getProviderSystem().getSystemName());
                 vSystemGroup.setText(storeEntry.getProviderSystem().getSystemGroup());
@@ -97,7 +98,31 @@ public class ArrowheadSystem_DefaultAdapter extends
                 vSystemGroup.setText(storeEntry.getConsumer().getSystemGroup());
             }
             vOrchRule.setText(storeEntry.getOrchestrationRule());
-            vPriority.setText(context.getString(R.string.priority) + " " + storeEntry.getPriority().toString());
+            vPriority.setText(ctx.getString(R.string.priority) + " " + storeEntry.getPriority().toString());
+
+            vSystemName.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Utility.showHelperToast(ctx, "System name");
+                    return true;
+                }
+            });
+
+            vSystemGroup.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Utility.showHelperToast(ctx, "System group");
+                    return true;
+                }
+            });
+
+            vOrchRule.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Utility.showHelperToast(ctx, "Orchestration rule");
+                    return true;
+                }
+            });
         }
     }
 }

@@ -18,14 +18,17 @@ import java.util.List;
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.model.ServiceRegChild_ListEntry;
 import eu.arrowhead.managementtool.model.ServiceRegParent_ListEntry;
+import eu.arrowhead.managementtool.utility.Utility;
 
 public class ServiceRegistry_Adapter extends
         ExpandableRecyclerAdapter<ServiceRegistry_Adapter.ProviderViewHolder, ServiceRegistry_Adapter.ServiceViewHolder> {
 
     private LayoutInflater mInflator;
+    private Context ctx;
 
     public ServiceRegistry_Adapter(Context context, @NonNull List<? extends ParentListItem> parentItemList) {
         super(parentItemList);
+        ctx = context;
         mInflator = LayoutInflater.from(context);
     }
 
@@ -44,13 +47,13 @@ public class ServiceRegistry_Adapter extends
     @Override
     public void onBindParentViewHolder(ProviderViewHolder parentViewHolder, int position, ParentListItem parentListItem) {
         ServiceRegParent_ListEntry entry = (ServiceRegParent_ListEntry) parentListItem;
-        parentViewHolder.bind(entry);
+        parentViewHolder.bind(entry, ctx);
     }
 
     @Override
     public void onBindChildViewHolder(ServiceViewHolder childViewHolder, int position, Object childListItem) {
         ServiceRegChild_ListEntry entry = (ServiceRegChild_ListEntry) childListItem;
-        childViewHolder.bind(entry);
+        childViewHolder.bind(entry, ctx);
     }
 
     static class ProviderViewHolder extends ParentViewHolder {
@@ -64,7 +67,7 @@ public class ServiceRegistry_Adapter extends
             vSystemGroup = (TextView) v.findViewById(R.id.system_group);
         }
 
-        void bind(ServiceRegParent_ListEntry entry) {
+        void bind(ServiceRegParent_ListEntry entry, final Context ctx) {
             vSystemName.setText(entry.getSystemName());
             vSystemGroup.setText(entry.getSystemGroup());
         }
@@ -83,10 +86,34 @@ public class ServiceRegistry_Adapter extends
             vServiceUri = (TextView) v.findViewById(R.id.service_uri);
         }
 
-        void bind(ServiceRegChild_ListEntry entry) {
+        void bind(ServiceRegChild_ListEntry entry, final Context ctx) {
             vServiceName.setText(entry.getServiceDefinition());
             vServiceGroup.setText(entry.getServiceGroup());
             vServiceUri.setText(entry.getServiceUri());
+
+            vServiceName.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Utility.showHelperToast(ctx, "Service name");
+                    return true;
+                }
+            });
+
+            vServiceGroup.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Utility.showHelperToast(ctx, "Service group");
+                    return true;
+                }
+            });
+
+            vServiceUri.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Utility.showHelperToast(ctx, "Service URI");
+                    return true;
+                }
+            });
         }
     }
 }

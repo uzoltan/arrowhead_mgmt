@@ -18,16 +18,17 @@ import java.util.List;
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.model.OrchestrationStore;
 import eu.arrowhead.managementtool.model.SystemStoreBased_ListEntry;
+import eu.arrowhead.managementtool.utility.Utility;
 
 public class ArrowheadSystem_StoreBasedAdapter extends
         ExpandableRecyclerAdapter<ArrowheadSystem_StoreBasedAdapter.ServiceViewHolder, ArrowheadSystem_StoreBasedAdapter.DetailsViewHolder> {
 
     private LayoutInflater mInflator;
-    private Context context;
+    private Context ctx;
 
     public ArrowheadSystem_StoreBasedAdapter(Context context, @NonNull List<? extends ParentListItem> parentItemList) {
         super(parentItemList);
-        this.context = context;
+        ctx = context;
         mInflator = LayoutInflater.from(context);
     }
 
@@ -43,7 +44,6 @@ public class ArrowheadSystem_StoreBasedAdapter extends
         return new ArrowheadSystem_StoreBasedAdapter.DetailsViewHolder(detailsView);
     }
 
-    //TODO add long click listeners to the views, explaning what is the value
     @Override
     public void onBindParentViewHolder(ArrowheadSystem_StoreBasedAdapter.ServiceViewHolder parentViewHolder, int position, ParentListItem parentListItem) {
         SystemStoreBased_ListEntry entry = (SystemStoreBased_ListEntry) parentListItem;
@@ -53,7 +53,7 @@ public class ArrowheadSystem_StoreBasedAdapter extends
     @Override
     public void onBindChildViewHolder(ArrowheadSystem_StoreBasedAdapter.DetailsViewHolder childViewHolder, int position, Object childListItem) {
         OrchestrationStore storeEntry = (OrchestrationStore) childListItem;
-        childViewHolder.bind(storeEntry);
+        childViewHolder.bind(storeEntry, ctx);
     }
 
     static class ServiceViewHolder extends ParentViewHolder {
@@ -92,7 +92,7 @@ public class ArrowheadSystem_StoreBasedAdapter extends
             vOperator = (TextView) v.findViewById(R.id.operator);
         }
 
-        void bind(OrchestrationStore storeEntry) {
+        void bind(OrchestrationStore storeEntry, final Context ctx) {
             if(storeEntry.isConsumerSide()){
                 vSystemName.setText(storeEntry.getProviderSystem().getSystemName());
                 vSystemGroup.setText(storeEntry.getProviderSystem().getSystemGroup());
@@ -102,15 +102,55 @@ public class ArrowheadSystem_StoreBasedAdapter extends
                 vSystemGroup.setText(storeEntry.getConsumer().getSystemGroup());
             }
             vOrchRule.setText(storeEntry.getOrchestrationRule());
-            vPriority.setText(context.getString(R.string.priority) + " " + storeEntry.getPriority().toString());
+            vPriority.setText(ctx.getString(R.string.priority) + " " + storeEntry.getPriority().toString());
             if(storeEntry.getProviderCloud() != null){
                 vCloudName.setText(storeEntry.getProviderCloud().getCloudName());
                 vOperator.setText(storeEntry.getProviderCloud().getOperator());
+
+                vCloudName.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        Utility.showHelperToast(ctx, "Cloud name");
+                        return true;
+                    }
+                });
+
+                vOperator.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        Utility.showHelperToast(ctx, "Operator name");
+                        return true;
+                    }
+                });
             }
             else{
                 vCloudName.setVisibility(View.GONE);
                 vOperator.setVisibility(View.GONE);
             }
+
+            vSystemName.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Utility.showHelperToast(ctx, "System name");
+                    return true;
+                }
+            });
+
+            vSystemGroup.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Utility.showHelperToast(ctx, "System group");
+                    return true;
+                }
+            });
+
+            vOrchRule.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Utility.showHelperToast(ctx, "Orchestration rule");
+                    return true;
+                }
+            });
         }
     }
 }

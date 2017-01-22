@@ -176,6 +176,7 @@ public class CoreSystems extends AppCompatActivity implements
             );
 
             Networking.getInstance(this).addToRequestQueue(jsArrayRequest);
+            dialog.dismiss();
         }
     }
 

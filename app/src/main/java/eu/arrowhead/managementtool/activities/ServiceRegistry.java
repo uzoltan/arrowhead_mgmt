@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -26,10 +27,13 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.adapters.ServiceRegistry_Adapter;
+import eu.arrowhead.managementtool.model.ArrowheadSystem;
 import eu.arrowhead.managementtool.model.ProvidedService;
 import eu.arrowhead.managementtool.model.ServiceRegChild_ListEntry;
 import eu.arrowhead.managementtool.model.ServiceRegParent_ListEntry;
@@ -75,6 +79,9 @@ public class ServiceRegistry extends AppCompatActivity implements
         mRecyclerView = (RecyclerView) findViewById(R.id.sr_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
+                DividerItemDecoration.VERTICAL);
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
         srl = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_sr_list);
         srl.setOnRefreshListener(this);
 
@@ -89,53 +96,30 @@ public class ServiceRegistry extends AppCompatActivity implements
 
                         @Override
                         public void onResponse(JSONObject response) {
+                            srList.clear();
                             ServiceQueryResult serviceQueryResult = Utility.fromJsonObject(response.toString(), ServiceQueryResult.class);
                             List<ProvidedService> psList = serviceQueryResult.getServiceQueryData();
 
-                            srList.clear();
-                            ServiceRegParent_ListEntry firstEntry = new ServiceRegParent_ListEntry();
-                            firstEntry.setSystemGroup(psList.get(0).getProvider().getSystemGroup());
-                            firstEntry.setSystemName(psList.get(0).getProvider().getSystemName());
-                            List<ServiceRegChild_ListEntry> firstServices = new ArrayList<>();
-                            firstServices.add(new ServiceRegChild_ListEntry(psList.get(0).getOffered().getServiceGroup(),
-                                    psList.get(0).getOffered().getServiceDefinition(), psList.get(0).getServiceURI()));
-                            firstEntry.setServices(firstServices);
-                            srList.add(firstEntry);
-
-                            boolean foundAMatch = false;
-                            boolean serviceFound = true;
-                            int entryIndex = 0;
+                            List<ArrowheadSystem> providers = new ArrayList<>();
                             for(ProvidedService ps : psList){
-                                for(ServiceRegParent_ListEntry entry : srList){
-                                    if(ps.getProvider().getSystemGroup().equals(entry.getSystemGroup()) &&
-                                            ps.getProvider().getSystemName().equals(entry.getSystemName())){
-                                        foundAMatch = true;
+                                providers.add(ps.getProvider());
+                            }
+                            Set<ArrowheadSystem> uniqueProviders = new LinkedHashSet<>(providers);
 
-                                        ServiceRegChild_ListEntry childEntry = new ServiceRegChild_ListEntry(
-                                                ps.getOffered().getServiceGroup(), ps.getOffered().getServiceDefinition(), ps.getServiceURI());
-                                        if(!entry.getServices().contains(childEntry)){
-                                            serviceFound = false;
-                                            entryIndex = srList.indexOf(entry);
-                                        }
+                            for(ArrowheadSystem provider : uniqueProviders){
+                                ServiceRegParent_ListEntry entry = new ServiceRegParent_ListEntry();
+                                entry.setSystemGroup(provider.getSystemGroup());
+                                entry.setSystemName(provider.getSystemName());
+
+                                List<ServiceRegChild_ListEntry> services = new ArrayList<>();
+                                for(ProvidedService ps : psList){
+                                    if(ps.getProvider().equals(provider)){
+                                        services.add(new ServiceRegChild_ListEntry
+                                                (ps.getOffered().getServiceGroup(), ps.getOffered().getServiceDefinition(), ps.getServiceURI()));
                                     }
                                 }
-                                if(!foundAMatch){
-                                    ServiceRegParent_ListEntry newEntry = new ServiceRegParent_ListEntry();
-                                    newEntry.setSystemGroup(ps.getProvider().getSystemGroup());
-                                    newEntry.setSystemName(ps.getProvider().getSystemName());
-
-                                    List<ServiceRegChild_ListEntry> services = new ArrayList<>();
-                                    services.add(new ServiceRegChild_ListEntry(ps.getOffered().getServiceGroup(),
-                                            ps.getOffered().getServiceDefinition(), ps.getServiceURI()));
-                                    newEntry.setServices(services);
-                                    srList.add(newEntry);
-                                }
-                                if(!serviceFound){
-                                    ServiceRegParent_ListEntry entry = srList.get(entryIndex);
-                                    ServiceRegChild_ListEntry childEntry = new ServiceRegChild_ListEntry(
-                                            ps.getOffered().getServiceGroup(), ps.getOffered().getServiceDefinition(), ps.getServiceURI());
-                                    entry.getServices().add(childEntry);
-                                }
+                                entry.setServices(services);
+                                srList.add(entry);
                             }
 
                             mAdapter = new ServiceRegistry_Adapter(ServiceRegistry.this, srList);
@@ -230,7 +214,6 @@ public class ServiceRegistry extends AppCompatActivity implements
         return false;
     }
 
-    //TODO valahogy jó lenne ha a lenyitott részek között is lehet keresni, check how is it possible
     private List<ServiceRegParent_ListEntry> filterList(List<ServiceRegParent_ListEntry> entries, String query) {
         query = query.toLowerCase();
 
@@ -240,6 +223,20 @@ public class ServiceRegistry extends AppCompatActivity implements
             final String systemGroup = entry.getSystemGroup().toLowerCase();
             if (systemName.contains(query) || systemGroup.contains(query)) {
                 filteredList.add(entry);
+            }
+            else{
+                String serviceName, serviceGroup, serviceUri;
+                for(ServiceRegChild_ListEntry service : entry.getServices()){
+                    serviceName = service.getServiceDefinition();
+                    serviceGroup = service.getServiceGroup();
+                    serviceUri = service.getServiceUri();
+                    if(serviceName != null && serviceGroup != null && serviceUri != null){
+                        if(serviceName.contains(query) || serviceGroup.contains(query) || serviceUri.contains(query)){
+                            filteredList.add(entry);
+                            break;
+                        }
+                    }
+                }
             }
         }
         return filteredList;

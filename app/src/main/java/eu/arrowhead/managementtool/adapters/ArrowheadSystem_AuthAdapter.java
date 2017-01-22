@@ -18,15 +18,18 @@ import java.util.List;
 import eu.arrowhead.managementtool.R;
 import eu.arrowhead.managementtool.model.ArrowheadSystem;
 import eu.arrowhead.managementtool.model.SystemAuth_ListEntry;
+import eu.arrowhead.managementtool.utility.Utility;
 
 public class ArrowheadSystem_AuthAdapter extends
         ExpandableRecyclerAdapter<ArrowheadSystem_AuthAdapter.ServiceViewHolder, ArrowheadSystem_AuthAdapter.SystemViewHolder> {
 
     private LayoutInflater mInflator;
+    private Context ctx;
 
     public ArrowheadSystem_AuthAdapter(Context context, @NonNull List<? extends ParentListItem> parentItemList) {
         super(parentItemList);
         mInflator = LayoutInflater.from(context);
+        ctx = context;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class ArrowheadSystem_AuthAdapter extends
     @Override
     public void onBindChildViewHolder(SystemViewHolder childViewHolder, int position, Object childListItem) {
         ArrowheadSystem system = (ArrowheadSystem) childListItem;
-        childViewHolder.bind(system);
+        childViewHolder.bind(system, ctx);
     }
 
     static class ServiceViewHolder extends ParentViewHolder {
@@ -81,9 +84,25 @@ public class ArrowheadSystem_AuthAdapter extends
             vSystemGroup = (TextView) v.findViewById(R.id.system_group);
         }
 
-        void bind(ArrowheadSystem system) {
+        void bind(ArrowheadSystem system, final Context ctx) {
             vSystemName.setText(system.getSystemName());
             vSystemGroup.setText(system.getSystemGroup());
+
+            vSystemName.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Utility.showHelperToast(ctx, "System name");
+                    return true;
+                }
+            });
+
+            vSystemGroup.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Utility.showHelperToast(ctx, "System group");
+                    return true;
+                }
+            });
         }
     }
 }
